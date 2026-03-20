@@ -1,0 +1,1348 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile — Cyberpark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      /* ─── Profile RPG Layout ─── */
+      .profile-page {
+        display: flex;
+        gap: 14px;
+        height: 100%;
+        align-items: flex-start;
+      }
+
+      /* ── LEFT: Character Panel ── */
+      .char-panel {
+        width: 230px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .panel-box {
+        background: var(--surface-2);
+        border: 2px solid rgba(233, 30, 140, 0.3);
+        border-radius: 2px;
+        padding: 14px;
+        box-shadow: 0 0 15px var(--pink-glow);
+      }
+
+      .panel-title {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--pink);
+        text-shadow: 0 0 6px var(--pink-glow);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(233, 30, 140, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Avatar — Pixel Art Face */
+      .avatar-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+      }
+
+      .avatar-frame {
+        width: 110px;
+        height: 110px;
+        border: 2px solid var(--pink);
+        box-shadow: 0 0 15px var(--pink-glow);
+        border-radius: 2px;
+        overflow: hidden;
+        image-rendering: pixelated;
+        position: relative;
+        background: var(--surface-2);
+        cursor: pointer;
+        transition: box-shadow 0.2s;
+      }
+
+      .avatar-frame:hover {
+        box-shadow: 0 0 15px var(--pink-glow);
+      }
+
+      /* Pixel face SVG */
+      .pixel-face {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pixel-face svg {
+        width: 90px;
+        height: 90px;
+        image-rendering: pixelated;
+      }
+
+      /* Blinking animation for eyes */
+      .pixel-eye {
+        animation: pixel-blink 4s step-end infinite;
+      }
+
+      @keyframes pixel-blink {
+        0%,
+        90%,
+        100% {
+          opacity: 1;
+        }
+        92% {
+          opacity: 0;
+        }
+        94% {
+          opacity: 1;
+        }
+        96% {
+          opacity: 0;
+        }
+        98% {
+          opacity: 1;
+        }
+      }
+
+      /* Idle breathing animation */
+      .pixel-face svg {
+        animation: pixel-breathe 3s ease-in-out infinite;
+      }
+
+      @keyframes pixel-breathe {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-2px);
+        }
+      }
+
+      .avatar-frame .customize-hint {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface-2);
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        text-align: center;
+        padding: 3px 0;
+        opacity: 0;
+        transition: opacity 0.15s;
+        letter-spacing: 0.5px;
+      }
+
+      .avatar-frame:hover .customize-hint {
+        opacity: 1;
+      }
+
+      /* Coming Soon Toast */
+      .coming-soon-toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: var(--surface-2);
+        border: 2px solid var(--pink);
+        box-shadow: 0 0 15px var(--pink-glow);
+        padding: 28px 36px;
+        border-radius: 2px;
+        z-index: 9999;
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.25s ease;
+      }
+
+      .coming-soon-toast.show {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .coming-soon-toast .toast-icon {
+        font-size: var(--text-2xl);
+        margin-bottom: 12px;
+        display: block;
+      }
+
+      .coming-soon-toast .toast-title {
+        font-family: var(--font-display);
+font-size: var(--text-xs);
+        color: var(--pink);
+        text-shadow: 0 0 8px var(--pink-glow);
+        margin-bottom: 8px;
+        letter-spacing: 2px;
+      }
+
+      .coming-soon-toast .toast-desc {
+        font-family: var(--font-primary);
+font-size: var(--text-sm);
+        color: var(--text-dim);
+        line-height: var(--leading-loose);
+      }
+
+      .coming-soon-overlay {
+        position: fixed;
+        inset: 0;
+        background: var(--surface-2);
+        z-index: 9998;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+
+      .coming-soon-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Character stat rows */
+      .stat-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 0;
+        border-bottom: 1px solid rgba(233, 30, 140, 0.08);
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        line-height: var(--leading-loose);
+      }
+
+      .stat-row:last-child {
+        border-bottom: none;
+      }
+
+      .stat-icon {
+        font-size: var(--text-xs);
+        width: 18px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .stat-label {
+        color: var(--text-dim);
+        flex: 1;
+        white-space: nowrap;
+}
+
+      .stat-value {
+        color: var(--text);
+        text-align: right;
+        word-break: break-all;
+  font-size: var(--text-3xs) !important;
+}
+
+      .stat-value.pink {
+        color: var(--pink);
+        text-shadow: 0 0 6px var(--pink-glow);
+      }
+
+      .stat-value.purple {
+        color: var(--purple);
+        text-shadow: 0 0 6px var(--purple-glow);
+      }
+
+      .stat-value.cyan {
+        color: #20d4dd;
+      }
+
+      /* ── RIGHT: Stats Panel ── */
+      .stats-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      /* Section header */
+      .section-header {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--pink);
+        text-shadow:
+          0 0 6px var(--pink-glow),
+          2px 2px 0 rgba(139, 68, 204, 0.5);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(233, 30, 140, 0.2);
+      }
+
+      /* Overall XP bar */
+      .xp-bar-wrap {
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.2);
+        height: 12px;
+        border-radius: 0;
+        overflow: hidden;
+        margin-bottom: 4px;
+        position: relative;
+      }
+
+      .xp-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--pink), var(--purple));
+        transition: width 0.8s ease;
+        box-shadow: 0 0 10px var(--pink-glow);
+        position: relative;
+      }
+
+      .xp-bar-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 6px;
+        background: var(--surface-2);
+        animation: xp-shine 1.5s ease-in-out infinite;
+      }
+
+      @keyframes xp-shine {
+        0%,
+        100% {
+          opacity: 0.4;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .xp-label {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4px;
+        margin-bottom: 14px;
+      }
+
+      /* Module progress grid */
+      .module-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .mod-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.15);
+        border-left: 3px solid rgba(233, 30, 140, 0.3);
+        border-radius: 2px;
+        transition: all 0.1s;
+      }
+
+      .mod-row:hover {
+        border-color: var(--pink);
+        background: var(--surface-2);
+        transform: translateX(2px);
+      }
+
+      .mod-row.tech-row {
+        border-left-color: rgba(139, 68, 204, 0.5);
+      }
+
+      .mod-row.tech-row:hover {
+        border-color: var(--purple);
+        background: var(--surface-2);
+      }
+
+      .mod-row-icon {
+        font-size: var(--text-sm);
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .mod-row-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .mod-row-name {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text);
+        margin-bottom: 6px;
+        display: block;
+        line-height: var(--leading-loose);
+      }
+
+      .mod-row-bar {
+        height: 4px;
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.1);
+        overflow: hidden;
+      }
+
+      .mod-row-fill {
+        height: 100%;
+        width: 0%;
+        transition: width 0.6s ease;
+      }
+
+      .mod-row-fill.pink {
+        background: var(--pink);
+        box-shadow: 0 0 4px var(--pink-glow);
+      }
+
+      .mod-row-fill.purple {
+        background: var(--purple);
+        box-shadow: 0 0 4px var(--purple-glow);
+      }
+
+      .mod-row-pct {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        flex-shrink: 0;
+        min-width: 32px;
+        text-align: right;
+      }
+
+      .mod-row-pct.done {
+        color: #20d4dd;
+        text-shadow: 0 0 6px rgba(32, 212, 221, 0.4);
+      }
+
+      /* Achievement badges */
+      .badges-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .badge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 12px;
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.15);
+        border-radius: 2px;
+        min-width: 72px;
+        transition: all 0.1s;
+      }
+
+      .badge:hover {
+        border-color: var(--pink);
+        box-shadow: 2px 2px 0 var(--pink-glow);
+      }
+
+      .badge.locked {
+        opacity: 0.35;
+        filter: grayscale(1);
+      }
+
+      .badge-icon {
+        font-size: var(--text-lg);
+        image-rendering: pixelated;
+      }
+
+      .badge-name {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        text-align: center;
+        line-height: var(--leading-loose);
+      }
+
+      /* Logout */
+      .logout-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background: transparent;
+        border: 1px solid rgba(233, 30, 140, 0.3);
+        color: var(--text-dim);
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        letter-spacing: 1px;
+        cursor: pointer;
+        border-radius: 2px;
+        transition: all 0.1s;
+        text-align: center;
+      }
+
+      .logout-btn:hover {
+        border-color: var(--pink);
+        color: var(--pink);
+        box-shadow: 2px 2px 0 var(--pink-glow);
+      }
+
+      /* Scrollable profile area */
+      .profile-scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(88vh - 24px);
+        padding-right: 4px;
+      }
+
+      /* Analytics Dashboard */
+      .analytics-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 10px;
+      }
+
+      .radar-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.2);
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .radar-chart {
+        width: 100%;
+        max-width: 250px;
+        aspect-ratio: 1/1;
+      }
+
+      .radar-chart polygon {
+        fill: rgba(32, 212, 221, 0.3);
+        stroke: var(--cyan);
+        stroke-width: 2;
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 0 4px var(--cyan));
+      }
+
+      .radar-chart text {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        fill: var(--text-dim);
+        dominant-baseline: middle;
+        text-anchor: middle;
+      }
+
+      .analytics-summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .stat-card {
+        background: var(--surface-2);
+        border: 1px solid rgba(233, 30, 140, 0.2);
+        padding: 10px;
+        text-align: center;
+        border-radius: 4px;
+      }
+
+      .stat-card-title {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        margin-bottom: 8px;
+        line-height: var(--leading-tight);
+      }
+
+      .stat-card-value {
+        font-family: var(--font-primary);
+font-size: var(--text-base);
+        font-weight: 700;
+        color: var(--cyan);
+        text-shadow: 0 0 5px rgba(32, 212, 221, 0.4);
+      }
+
+      .stat-card-icon {
+        font-size: var(--text-sm);
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .profile-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .profile-scroll::-webkit-scrollbar-thumb {
+        background: var(--surface-2);
+      }
+
+      /* ── Profile Responsive ── */
+      @media (max-width: 860px) {
+        .profile-page {
+          flex-direction: column;
+        }
+
+        .char-panel {
+          width: 100%;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .char-panel .panel-box {
+          flex: 1;
+          min-width: 200px;
+        }
+
+        .profile-scroll {
+          height: auto;
+          overflow-y: visible;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .profile-page {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .char-panel {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .char-panel .panel-box {
+          min-width: unset;
+        }
+
+        .avatar-frame {
+          width: 80px;
+          height: 80px;
+        }
+
+        .pixel-face svg {
+          width: 65px;
+          height: 65px;
+        }
+
+        .stat-row {
+          font-size: var(--text-2xs);
+        }
+
+        .stat-icon {
+          font-size: var(--text-xs);
+        }
+
+        .stats-panel {
+          min-width: unset;
+        }
+
+        .section-header {
+          font-size: var(--text-2xs);
+        }
+
+        .mod-row {
+          padding: 8px 10px;
+          gap: 8px;
+        }
+
+        .mod-row-name {
+          font-size: var(--text-2xs);
+        }
+
+        .mod-row-pct {
+          font-size: var(--text-2xs);
+        }
+
+        .xp-label {
+          font-size: var(--text-2xs);
+        }
+
+        .badges-grid {
+          gap: 6px;
+        }
+
+        .badge {
+          min-width: 58px;
+          padding: 8px 8px;
+        }
+
+        .badge-icon {
+          font-size: var(--text-base);
+        }
+
+        .badge-name {
+          font-size: var(--text-2xs);
+        }
+
+        .panel-title {
+          font-size: var(--text-2xs);
+        }
+
+        .logout-btn {
+          font-size: var(--text-2xs);
+          padding: 8px;
+        }
+
+        .profile-scroll {
+          height: auto;
+          overflow-y: visible;
+        }
+
+        .coming-soon-toast {
+          padding: 20px 24px;
+        }
+
+        .coming-soon-toast .toast-title {
+          font-size: var(--text-2xs);
+        }
+
+        .coming-soon-toast .toast-desc {
+          font-size: var(--text-xs);
+        }
+      }
+    </style>
+    <link rel="icon" type="image/png" href="../assets/images/bot-avatar.png" />
+</head>
+
+  <body>
+    <div class="app-wrapper">
+      <div class="app-container">
+        <!-- ─── SIDEBAR ─── -->
+        <nav class="sidebar">
+          <div class="sidebar-logo">CYBER<br />PARK</div>
+          <p class="sidebar-desc">CYBER TRAINING SYS</p>
+          <div class="nav-menu">
+            <a href="../index.html" class="nav-link"><span>HOME</span></a>
+            <a
+              href="javascript:void(0)"
+              class="nav-link"
+              onclick="
+                Auth.handleSidebarPathClick(
+                  'non-technical',
+                  'nontechnical.html',
+                )
+              "
+              ><span>NON-TECH</span></a
+            >
+            <a
+              href="javascript:void(0)"
+              class="nav-link orange"
+              onclick="
+                Auth.handleSidebarPathClick('technical', 'technical.html')
+              "
+              ><span>TECHNICAL</span></a
+            >
+            <a href="profile.html" class="nav-link active"
+              ><span>AGENT PROFILE</span></a
+            >
+          </div>
+        </nav>
+
+        <!-- Mobile sidebar toggle -->
+        <button
+          class="sidebar-toggle"
+          onclick="
+            document.querySelector('.sidebar').classList.toggle('open');
+            this.textContent = this.textContent === '☰' ? '✕' : '☰';
+          "
+        >
+          ☰
+        </button>
+
+        <!-- ─── MAIN CONTENT ─── -->
+        <main class="main-content" style="padding-top: 36px">
+          <p class="terminal-prompt" style="margin-bottom: 18px">
+            &gt; LOAD PLAYER_DATA<span class="cursor-blink"></span>
+          </p>
+
+          <!-- RPG CHARACTER CARD LAYOUT -->
+          <div class="profile-page">
+            <!-- ── LEFT COLUMN ── -->
+            <div class="char-panel">
+              <!-- Avatar Box -->
+              <div class="panel-box">
+                <div class="panel-title">🧑‍💻 CHARACTER</div>
+
+                <!-- Pixel Art Avatar -->
+                <div class="avatar-wrapper">
+                  <div
+                    class="avatar-frame"
+                    onclick="showComingSoon()"
+                    title="คลิกเพื่อ Customize"
+                  >
+                    <div class="pixel-face">
+                      <svg
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                        shape-rendering="crispEdges"
+                      >
+                        <!-- Hair -->
+                        <rect x="4" y="1" width="8" height="2" fill="#8b44cc" />
+                        <rect
+                          x="3"
+                          y="2"
+                          width="10"
+                          height="1"
+                          fill="#8b44cc"
+                        />
+                        <rect x="3" y="3" width="2" height="2" fill="#8b44cc" />
+                        <rect
+                          x="11"
+                          y="3"
+                          width="2"
+                          height="2"
+                          fill="#8b44cc"
+                        />
+                        <!-- Face -->
+                        <rect x="4" y="3" width="8" height="6" fill="#ffcc99" />
+                        <rect x="3" y="5" width="1" height="3" fill="#ffcc99" />
+                        <rect
+                          x="12"
+                          y="5"
+                          width="1"
+                          height="3"
+                          fill="#ffcc99"
+                        />
+                        <!-- Eyes -->
+                        <rect
+                          class="pixel-eye"
+                          x="5"
+                          y="5"
+                          width="2"
+                          height="2"
+                          fill="#1a1a2e"
+                        />
+                        <rect
+                          class="pixel-eye"
+                          x="9"
+                          y="5"
+                          width="2"
+                          height="2"
+                          fill="#1a1a2e"
+                        />
+                        <!-- Eye shine -->
+                        <rect
+                          class="pixel-eye"
+                          x="5"
+                          y="5"
+                          width="1"
+                          height="1"
+                          fill="#e91e8c"
+                        />
+                        <rect
+                          class="pixel-eye"
+                          x="9"
+                          y="5"
+                          width="1"
+                          height="1"
+                          fill="#e91e8c"
+                        />
+                        <!-- Mouth -->
+                        <rect x="6" y="7" width="4" height="1" fill="#e06060" />
+                        <!-- Body -->
+                        <rect x="4" y="9" width="8" height="1" fill="#e91e8c" />
+                        <rect
+                          x="3"
+                          y="10"
+                          width="10"
+                          height="3"
+                          fill="#e91e8c"
+                        />
+                        <rect
+                          x="3"
+                          y="10"
+                          width="1"
+                          height="3"
+                          fill="#8b44cc"
+                        />
+                        <rect
+                          x="12"
+                          y="10"
+                          width="1"
+                          height="3"
+                          fill="#8b44cc"
+                        />
+                        <!-- Arms -->
+                        <rect
+                          x="2"
+                          y="10"
+                          width="1"
+                          height="2"
+                          fill="#ffcc99"
+                        />
+                        <rect
+                          x="13"
+                          y="10"
+                          width="1"
+                          height="2"
+                          fill="#ffcc99"
+                        />
+                        <!-- Legs -->
+                        <rect
+                          x="5"
+                          y="13"
+                          width="2"
+                          height="2"
+                          fill="#1a1a2e"
+                        />
+                        <rect
+                          x="9"
+                          y="13"
+                          width="2"
+                          height="2"
+                          fill="#1a1a2e"
+                        />
+                      </svg>
+                    </div>
+                    <span class="customize-hint">CUSTOMIZE</span>
+                  </div>
+                </div>
+
+                <!-- Coming Soon Toast -->
+                <div
+                  class="coming-soon-overlay"
+                  id="comingSoonOverlay"
+                  onclick="hideComingSoon()"
+                ></div>
+                <div class="coming-soon-toast" id="comingSoonToast">
+                  <span class="toast-icon">🚧</span>
+                  <div class="toast-title">COMING SOON</div>
+                  <div class="toast-desc">
+                    ฟีเจอร์ Custom Avatar<br />กำลังพัฒนาอยู่ รอติดตามนะ!
+                  </div>
+                </div>
+
+                <!-- Char info rows -->
+                <div class="stat-row">
+                  <span class="stat-icon">⊛</span>
+                  <span class="stat-label">NAME</span>
+                  <span class="stat-value pink" id="charName">AGENT_01</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-icon">✉</span>
+                  <span class="stat-label">EMAIL</span>
+                  <span class="stat-value" id="charEmail" style="font-size: var(--text-2xs)"
+                    >...</span
+                  >
+                </div>
+                <div class="stat-row">
+                  <span class="stat-icon">⚔</span>
+                  <span class="stat-label">CLASS</span>
+                  <span class="stat-value purple" id="charClass">PENDING</span>
+                </div>
+                <div class="stat-row">
+                  <span class="stat-icon">◈</span>
+                  <span class="stat-label">RANK</span>
+                  <span class="stat-value cyan" id="charRank">ROOKIE</span>
+                </div>
+              </div>
+
+              <!-- Logout -->
+              <button class="logout-btn" onclick="logout()">
+                &gt; DISCONNECT SESSION
+              </button>
+            </div>
+
+            <!-- ── RIGHT COLUMN ── -->
+            <div class="stats-panel">
+              <!-- Overall XP -->
+              <div class="panel-box">
+                <div class="section-header">📊 TRAINING PROGRESS</div>
+
+                <div class="xp-bar-wrap">
+                  <div class="xp-bar-fill" id="xpFill" style="width: 0%"></div>
+                </div>
+                <div class="xp-label">
+                  <span>OVERALL XP</span>
+                  <span id="xpText" style="color: var(--pink)">0%</span>
+                </div>
+
+                <!-- Module rows -->
+                <div class="module-grid">
+                  <!-- Non-Tech Modules -->
+                  <div class="mod-row path-non-tech-row">
+                    <span class="mod-row-icon">📧</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">PHISHING MAIL</span>
+                      <div class="mod-row-bar">
+                        <div class="mod-row-fill pink" id="bar-phishing"></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-phishing">0%</span>
+                  </div>
+
+                  <div class="mod-row path-non-tech-row">
+                    <span class="mod-row-icon">🧠</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">SOCIAL ENGINEERING</span>
+                      <div class="mod-row-bar">
+                        <div class="mod-row-fill pink" id="bar-social"></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-social">0%</span>
+                  </div>
+
+                  <!-- Tech Modules -->
+                  <div class="mod-row path-tech-row">
+                    <span class="mod-row-icon">🐧</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">LINUX FUNDAMENTAL</span>
+                      <div class="mod-row-bar">
+                        <div class="mod-row-fill purple" id="bar-linux"></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-linux">0%</span>
+                  </div>
+
+                  <div class="mod-row path-tech-row">
+                    <span class="mod-row-icon">🌐</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">NETWORKING SECURITY</span>
+                      <div class="mod-row-bar">
+                        <div class="mod-row-fill purple" id="bar-network"></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-network">0%</span>
+                  </div>
+
+                  <div class="mod-row path-tech-row">
+                    <span class="mod-row-icon">🔵</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">DEFENSIVE SECURITY</span>
+                      <div class="mod-row-bar">
+                        <div
+                          class="mod-row-fill purple"
+                          id="bar-defensive"
+                        ></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-defensive">0%</span>
+                  </div>
+
+                  <div class="mod-row path-tech-row">
+                    <span class="mod-row-icon">🔴</span>
+                    <div class="mod-row-info">
+                      <span class="mod-row-name">OFFENSIVE SECURITY</span>
+                      <div class="mod-row-bar">
+                        <div
+                          class="mod-row-fill purple"
+                          id="bar-offensive"
+                        ></div>
+                      </div>
+                    </div>
+                    <span class="mod-row-pct" id="pct-offensive">0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Achievements -->
+              <div class="panel-box">
+                <div class="section-header">🏆 ACHIEVEMENTS</div>
+                <div class="badges-grid">
+                  <div class="badge locked" id="badge-phish">
+                    <span class="badge-icon">🎣</span>
+                    <span class="badge-name">PHISH<br />BUSTER</span>
+                  </div>
+                  <div class="badge locked" id="badge-social">
+                    <span class="badge-icon">🧠</span>
+                    <span class="badge-name">MIND<br />GUARD</span>
+                  </div>
+                  <div class="badge locked" id="badge-linux">
+                    <span class="badge-icon">🐧</span>
+                    <span class="badge-name">LINUX<br />MASTER</span>
+                  </div>
+                  <div class="badge locked" id="badge-net">
+                    <span class="badge-icon">🌐</span>
+                    <span class="badge-name">NET<br />RANGER</span>
+                  </div>
+                  <div class="badge locked" id="badge-def">
+                    <span class="badge-icon">🛡️</span>
+                    <span class="badge-name">BLUE<br />KNIGHT</span>
+                  </div>
+                  <div class="badge locked" id="badge-off">
+                    <span class="badge-icon">⚔️</span>
+                    <span class="badge-name">RED<br />BLADE</span>
+                  </div>
+                  <div class="badge locked" id="badge-all">
+                    <span class="badge-icon">👑</span>
+                    <span class="badge-name">CYBER<br />SENSEI</span>
+                  </div>
+                </div>
+
+                <!-- Dashboard Analytics -->
+                <div class="section-header">📊 ANALYTICS & STATS</div>
+                <div class="analytics-container">
+                  <div class="analytics-summary">
+                    <div class="stat-card">
+                      <span class="stat-card-icon">🎯</span>
+                      <div class="stat-card-title">BEST SKILL</div>
+                      <div class="stat-card-value" id="statBestSkill">--</div>
+                    </div>
+                    <div class="stat-card">
+                      <span class="stat-card-icon">✅</span>
+                      <div class="stat-card-title">COMPLETED</div>
+                      <div class="stat-card-value" id="statCompleted">0/6</div>
+                    </div>
+                    <div class="stat-card">
+                      <span class="stat-card-icon">📈</span>
+                      <div class="stat-card-title">AVG SCORE</div>
+                      <div class="stat-card-value" id="statAvg">0%</div>
+                    </div>
+                  </div>
+
+                  <div class="radar-wrapper">
+                    <svg
+                      class="radar-chart"
+                      viewBox="0 0 200 200"
+                      id="radarSvg"
+                    >
+                      <!-- Grid web -->
+                      <g
+                        stroke="rgba(255,255,255,0.1)"
+                        stroke-width="1"
+                        fill="none"
+                      >
+                        <polygon
+                          points="100,20 169.28,60 169.28,140 100,180 30.72,140 30.72,60"
+                        />
+                        <polygon
+                          points="100,40 151.96,70 151.96,130 100,160 48.04,130 48.04,70"
+                        />
+                        <polygon
+                          points="100,60 134.64,80 134.64,120 100,140 65.36,120 65.36,80"
+                        />
+                        <polygon
+                          points="100,80 117.32,90 117.32,110 100,120 82.68,110 82.68,90"
+                        />
+                      </g>
+                      <!-- Grid axes -->
+                      <g stroke="rgba(255,255,255,0.1)" stroke-width="1">
+                        <line x1="100" y1="100" x2="100" y2="20" />
+                        <line x1="100" y1="100" x2="169.28" y2="60" />
+                        <line x1="100" y1="100" x2="169.28" y2="140" />
+                        <line x1="100" y1="100" x2="100" y2="180" />
+                        <line x1="100" y1="100" x2="30.72" y2="140" />
+                        <line x1="100" y1="100" x2="30.72" y2="60" />
+                      </g>
+                      <!-- Labels -->
+                      <text x="100" y="10">PHISH</text>
+                      <text x="180" y="55">SOCIAL</text>
+                      <text x="180" y="145">LINUX</text>
+                      <text x="100" y="193">NET</text>
+                      <text x="20" y="145">DEF</text>
+                      <text x="20" y="55">OFF</text>
+                      <!-- Data Polygon -->
+                      <polygon
+                        id="radarPolygon"
+                        points="100,100 100,100 100,100 100,100 100,100 100,100"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      window.AUTH_MODE = 'guard';
+    </script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+      const RANKS = [
+        [0, 'ROOKIE'],
+        [20, 'INITIATE'],
+        [40, 'ANALYST'],
+        [60, 'SPECIALIST'],
+        [80, 'OPERATOR'],
+        [100, 'CYBER SENSEI'],
+      ];
+
+      const MODS = [
+        'phishing',
+        'social',
+        'linux',
+        'network',
+        'defensive',
+        'offensive',
+      ];
+
+      async function loadProfile() {
+        if (!window.Auth) return;
+        window.Auth.requireAuth(async () => {
+          const profile = await window.Auth.getMe();
+          const email = profile
+            ? profile.email
+            : (window.Auth ? window.Auth.getEmail() : '');
+          const chosenPath = profile ? profile.chosen_path : null;
+
+          document.getElementById('charEmail').textContent = email;
+          document.getElementById('charName').textContent = email
+            .split('@')[0]
+            .toUpperCase();
+
+          // Update Class/Path
+          const classEl = document.getElementById('charClass');
+          if (chosenPath === 'technical') {
+            classEl.textContent = 'TECHNICAL';
+            classEl.className = 'stat-value purple';
+          } else if (chosenPath === 'non-technical') {
+            classEl.textContent = 'NON-TECHNICAL';
+            classEl.className = 'stat-value pink';
+          } else {
+            classEl.textContent = 'PENDING';
+            classEl.className = 'stat-value';
+          }
+
+          // Filter Modules based on path
+          document.querySelectorAll('.mod-row').forEach((row) => {
+            if (!chosenPath) return; // Show all if pending
+            if (
+              chosenPath === 'technical' &&
+              row.classList.contains('path-non-tech-row')
+            ) {
+              row.style.display = 'none';
+            } else if (
+              chosenPath === 'non-technical' &&
+              row.classList.contains('path-tech-row')
+            ) {
+              row.style.display = 'none';
+            } else {
+              row.style.display = 'flex';
+            }
+          });
+
+          let total = 0;
+          const prog = {};
+          for (const m of MODS) {
+            const v = (await window.Auth.getProgress(m)) || 0;
+            prog[m] = v;
+            total += v;
+            const bar = document.getElementById('bar-' + m);
+            const pct = document.getElementById('pct-' + m);
+            if (bar) bar.style.width = v + '%';
+            if (pct) {
+              pct.textContent = v + '%';
+              if (v >= 100) pct.classList.add('done');
+            }
+          }
+
+          // Overall XP
+          const avg = Math.round(total / MODS.length);
+          document.getElementById('xpFill').style.width = avg + '%';
+          document.getElementById('xpText').textContent = avg + '%';
+
+          // Rank
+          let rank = RANKS[0][1];
+          for (const [threshold, name] of RANKS) {
+            if (avg >= threshold) rank = name;
+          }
+          document.getElementById('charRank').textContent = rank;
+
+          // Badges
+          const earnedBadges = (await window.Auth.getAchievements()) || [];
+          earnedBadges.forEach((b) => {
+            const el = document.getElementById(b);
+            if (el) el.classList.remove('locked');
+          });
+
+          // Special case for CYBER SENSEI (100% overall)
+          if (avg >= 100) {
+            document.getElementById('badge-all').classList.remove('locked');
+            if (window.Auth.unlockBadge) window.Auth.unlockBadge('badge-all');
+          }
+          // Update Radar Chart and Dashboard Stats
+          updateDashboardAnalytics(prog);
+        });
+      }
+
+      function updateDashboardAnalytics(prog) {
+        // Order matches radar chart: Phish (top), Social (top-right), Linux (bottom-right), Net (bottom), Def (bottom-left), Off (top-left)
+        const order = [
+          'phishing',
+          'social',
+          'linux',
+          'network',
+          'defensive',
+          'offensive',
+        ];
+        const angles = [-90, -30, 30, 90, 150, 210]; // Degrees starting from top
+
+        let bestSkill = '--';
+        let maxVal = -1;
+        let completedCount = 0;
+        let totalVal = 0;
+
+        const points = order.map((mod, i) => {
+          const val = prog[mod] || 0;
+          totalVal += val;
+          if (val === 100) completedCount++;
+          if (val > maxVal) {
+            maxVal = val;
+            bestSkill = mod.toUpperCase();
+          }
+
+          // Calculate polygon points (center 100,100, radius 80)
+          const rad = (angles[i] * Math.PI) / 180;
+          const r = (val / 100) * 80;
+          const px = 100 + r * Math.cos(rad);
+          const py = 100 + r * Math.sin(rad);
+          return `${px},${py}`;
+        });
+
+        // Update Radar Polygon
+        document
+          .getElementById('radarPolygon')
+          .setAttribute('points', points.join(' '));
+
+        // Update Stat Cards
+        document.getElementById('statBestSkill').textContent =
+          maxVal === 0 ? '--' : bestSkill.substring(0, 5);
+        document.getElementById('statCompleted').textContent =
+          `${completedCount}/6`;
+        document.getElementById('statAvg').textContent =
+          Math.round(totalVal / 6) + '%';
+      }
+
+      document.addEventListener('DOMContentLoaded', loadProfile);
+
+      // Coming Soon popup for avatar customization
+      function showComingSoon() {
+        document.getElementById('comingSoonOverlay').classList.add('show');
+        document.getElementById('comingSoonToast').classList.add('show');
+        setTimeout(hideComingSoon, 2500);
+      }
+
+      function hideComingSoon() {
+        document.getElementById('comingSoonOverlay').classList.remove('show');
+        document.getElementById('comingSoonToast').classList.remove('show');
+      }
+
+      function logout() {
+        if (window.Auth) window.Auth.logout();
+        else {
+          document.cookie = 'ss_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          document.cookie = 'ss_email=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+          window.location.href = '../index.html';
+        }
+      }
+    </script>
+  </body>
+</html>

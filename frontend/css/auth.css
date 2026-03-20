@@ -1,0 +1,262 @@
+/* ═══════════════════════════════════════════
+   CYBERPARK — Auth Modal Styles (Pink/Purple Theme)
+   ═══════════════════════════════════════════ */
+
+/* ── Overlay ── */
+#auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+  animation: overlayIn 0.3s ease;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Modal Card ── */
+.auth-card {
+  background: rgba(4, 0, 10, 0.97);
+  border: 1px solid rgba(233, 30, 140, 0.3);
+  border-top: 2px solid #e91e8c;
+  border-radius: 2px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  animation: cardIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-shadow:
+    0 0 40px rgba(233, 30, 140, 0.15),
+    4px 4px 0 rgba(139, 68, 204, 0.3);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Header ── */
+.auth-logo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  color: #e91e8c;
+  letter-spacing: 4px;
+  display: block;
+  text-shadow:
+    0 0 12px rgba(233, 30, 140, 0.6),
+    2px 2px 0 rgba(139, 68, 204, 0.5);
+}
+
+.auth-logo-sub {
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  color: #604860;
+  letter-spacing: 2px;
+  margin-top: 8px;
+  display: block;
+}
+
+/* ── Tabs ── */
+.auth-tabs {
+  display: flex;
+  border: 1px solid rgba(233, 30, 140, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: #604860;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.auth-tab.active {
+  background: rgba(233, 30, 140, 0.15);
+  color: #e91e8c;
+  text-shadow: 0 0 6px rgba(233, 30, 140, 0.4);
+  border-bottom: 2px solid #e91e8c;
+}
+
+.auth-tab:hover:not(.active) {
+  color: #c898b8;
+  background: rgba(233, 30, 140, 0.05);
+}
+
+/* ── Close Button ── */
+.auth-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #604860;
+  font-size: var(--text-base);
+  cursor: pointer;
+  line-height: var(--leading-none);
+  padding: 4px 8px;
+  transition: color 0.2s;
+  font-family: var(--font-display);
+}
+
+.auth-close:hover {
+  color: #e91e8c;
+  text-shadow: 0 0 6px rgba(233, 30, 140, 0.4);
+}
+
+/* ── Form ── */
+.auth-form {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-form.active {
+  display: flex;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-field label {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  color: #604860;
+  letter-spacing: 1.2px;
+}
+
+.auth-field input {
+  background: rgba(2, 0, 6, 0.9);
+  border: 1px solid rgba(233, 30, 140, 0.2);
+  border-radius: 2px;
+  padding: 12px 14px;
+  color: #c898b8;
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+}
+
+.auth-field input:focus {
+  border-color: #e91e8c;
+  box-shadow: 0 0 8px rgba(233, 30, 140, 0.2);
+}
+
+.auth-field input::placeholder {
+  color: #3a2040;
+}
+
+/* ── Submit Button ── */
+.auth-submit {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: #e91e8c;
+  border: 1px solid rgba(233, 30, 140, 0.5);
+  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: all 0.2s;
+  box-shadow: 2px 2px 0 rgba(139, 68, 204, 0.3);
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: rgba(233, 30, 140, 0.12);
+  border-color: #e91e8c;
+  box-shadow:
+    0 0 12px rgba(233, 30, 140, 0.3),
+    2px 2px 0 rgba(139, 68, 204, 0.5);
+  color: #ff4db8;
+}
+
+.auth-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Message ── */
+.auth-message {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  text-align: center;
+  min-height: 20px;
+  padding: 10px;
+  border-radius: 2px;
+  display: none;
+  letter-spacing: 1px;
+}
+
+.auth-message.error {
+  display: block;
+  color: #ff4466;
+  background: rgba(255, 68, 102, 0.08);
+  border: 1px solid rgba(255, 68, 102, 0.2);
+}
+
+.auth-message.success {
+  display: block;
+  color: #e91e8c;
+  background: rgba(233, 30, 140, 0.08);
+  border: 1px solid rgba(233, 30, 140, 0.25);
+}
+
+/* ── Terminal prompt decoration ── */
+.auth-prompt {
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  color: #3a2040;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-prompt span {
+  color: #8b44cc;
+  text-shadow: 0 0 6px rgba(139, 68, 204, 0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 20px;
+    margin: 16px;
+  }
+}

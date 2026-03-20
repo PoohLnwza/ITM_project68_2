@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Non-Technical Path — Cyberpark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="icon" type="image/png" href="../assets/images/bot-avatar.png" />
+</head>
+
+  <body>
+    <div class="app-wrapper">
+      <div class="app-container">
+        <!-- ─── SIDEBAR ─── -->
+        <nav class="sidebar">
+          <div class="sidebar-logo">CYBER<br />PARK</div>
+          <p class="sidebar-desc">CYBER TRAINING SYS</p>
+
+          <div class="nav-menu">
+            <a href="../index.html" class="nav-link">
+              <span>HOME</span>
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="nav-link active"
+              onclick="
+                Auth.handleSidebarPathClick(
+                  'non-technical',
+                  'nontechnical.html',
+                )
+              "
+            >
+              <span>NON-TECHNICAL</span>
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="nav-link orange"
+              onclick="
+                Auth.handleSidebarPathClick('technical', 'technical.html')
+              "
+            >
+              <span>TECHNICAL</span>
+            </a>
+            <a
+              href="#"
+              class="nav-link"
+              id="profile-nav-btn"
+              onclick="window.location.href = 'profile.html'"
+            >
+              <span>ACCESS SYSTEM</span>
+            </a>
+          </div>
+        </nav>
+
+        <!-- Mobile sidebar toggle -->
+        <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open'); this.textContent = this.textContent === '☰' ? '✕' : '☰'">☰</button>
+
+
+        <!-- ─── MAIN CONTENT ─── -->
+        <main class="main-content">
+          <div class="container">
+            <header class="header">
+              <h1 class="title">CYBERPARK</h1>
+              <p class="subtitle">
+                NON-TECHNICAL PATH<span class="cursor-blink"></span>
+              </p>
+            </header>
+
+            <p class="terminal-prompt">
+              root@cyberpark:~/nontech$ ls modules/<span
+                class="cursor-blink"
+              ></span>
+            </p>
+
+            <div class="section active">
+              <div class="path-header">
+                <a href="../index.html">
+                  <button class="back-btn">&#x3C; RETURN BASE</button>
+                </a>
+                <h2 class="path-title">NON-TECHNICAL PATH</h2>
+              </div>
+
+              <div class="modules">
+                <!-- Module 1 -->
+                <div class="module-card green">
+                  <span class="mod-icon">📧</span>
+                  <div class="mod-info">
+                    <span class="mod-num">MODULE 01</span>
+                    <span class="mod-name">PHISHING MAIL</span>
+                    <span class="mod-desc"
+                      >เรียนรู้วิธีสังเกตอีเมลหลอกลวง ฝึกแยกแยะลิงก์อันตราย
+                      และป้องกันตัวจากการถูกฟิชชิ่ง</span
+                    >
+                    <div class="progress-bar">
+                      <div class="fill green" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <button
+                    class="start-btn"
+                    onclick="window.location.href = 'phishing.html'"
+                  >
+                    START
+                  </button>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="module-card green">
+                  <span class="mod-icon">🧠</span>
+                  <div class="mod-info">
+                    <span class="mod-num">MODULE 02</span>
+                    <span class="mod-name">SOCIAL ENGINEERING</span>
+                    <span class="mod-desc"
+                      >ทำความเข้าใจเทคนิคการหลอกลวงทางจิตวิทยา เช่น pretexting,
+                      baiting และวิธีรับมือ</span
+                    >
+                    <div class="progress-bar">
+                      <div class="fill green" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <button
+                    class="start-btn"
+                    onclick="window.location.href = 'social.html'"
+                  >
+                    START
+                  </button>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="module-card green">
+                  <span class="mod-icon">🔐</span>
+                  <div class="mod-info">
+                    <span class="mod-num">MODULE 03</span>
+                    <span class="mod-name">MFA &amp; PASSWORD SECURITY</span>
+                    <span class="mod-desc"
+                      >สร้างรหัสผ่านที่ปลอดภัย เรียนรู้การยืนยันตัวตนหลายขั้นตอน
+                      (MFA) และเครื่องมือจัดการรหัสผ่าน</span
+                    >
+                    <div class="progress-bar">
+                      <div class="fill green" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <button class="start-btn">INITIATE TRAINING</button>
+                </div>
+              </div>
+            </div>
+
+            <footer class="footer">
+              (c) 2026 Cyberpark — LEVEL UP YOUR SECURITY SKILLS
+            </footer>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+      window.AUTH_MODE = 'intercept';
+    </script>
+    <script src="../js/auth.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const token = window.Auth ? window.Auth.getToken() : null;
+        const navBtn = document.getElementById('profile-nav-btn');
+        if (token && window.Auth) {
+          navBtn.innerHTML = '<span>AGENT PROFILE</span>';
+          navBtn.onclick = () => (window.location.href = 'profile.html');
+
+          // Sync Progress Bars
+          const cards = document.querySelectorAll('.module-card');
+          const internalMods = ['phishing', 'social', 'mfa']; // mfa is upcoming/placeholder
+
+          for (let i = 0; i < cards.length; i++) {
+            const modId = internalMods[i];
+            if (!modId) continue;
+            const v = await window.Auth.getProgress(modId);
+            const fill = cards[i].querySelector('.fill');
+            if (fill) fill.style.width = v + '%';
+          }
+        } else {
+          navBtn.innerHTML = '<span>ACCESS SYSTEM</span>';
+          navBtn.onclick = () => (window.location.href = 'profile.html');
+        }
+      });
+    </script>
+  </body>
+</html>

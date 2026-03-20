@@ -1,0 +1,135 @@
+[
+  {
+    "id": "siem-intro",
+    "title": "Introduction to SIEM",
+    "icon": "🛡️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "SIEM คืออะไร?",
+        "text": "SIEM (Security Information and Event Management) เป็นระบบส่วนกลางที่รวมเอา Log จากอุปกรณ์ต่างๆ เช่น Firewall, Server, Endpoint มาวิเคราะห์ความสัมพันธ์ (Correlation) เพื่อค้นหาพฤติกรรมที่น่าสงสัยได้อย่างแม่นยำและรวดเร็ว\n\nSIEM = SIM (Security Information Management) + SEM (Security Event Management)"
+      },
+      {
+        "type": "content",
+        "heading": "บทบาทของ SIEM ต่อ Blue Team",
+        "text": "Blue Team ใช้ SIEM เพื่อ:\n• Log Collection: เก็บข้อมูลย้อนหลังตามนโยบาย Compliance (PCI-DSS, HIPAA, PDPA)\n• Real-time Alerting: แจ้งเตือนเมื่อเกิด Incident ทันที\n• Threat Hunting: ค้นหาภัยคุกคามที่หลบซ่อนอยู่ในระบบ (Proactive)\n• Forensics: สืบสวนหาหลักฐานหลังเกิด Incident\n• Dashboarding: แสดงภาพรวมความปลอดภัยขององค์กร\n• Compliance Reporting: สร้างรายงานตามมาตรฐาน\n\nSIEM ยอดนิยม:\n• Splunk: แพงแต่ทรงพลัง\n• Microsoft Sentinel: บน Azure Cloud\n• IBM QRadar: Enterprise\n• Elastic SIEM (ELK Stack): Open Source\n• Wazuh: Open Source ฟรี"
+      },
+      {
+        "type": "content",
+        "heading": "Log Sources ที่ SIEM ควรเก็บ",
+        "text": "แหล่ง Log ที่สำคัญสำหรับ SIEM:\n\n• Firewall/Network: Allow/Deny rules, Connection logs\n• Web Server: Apache/Nginx access.log, error.log\n• DNS Server: Query logs (ตรวจจับ DNS Tunneling)\n• Authentication: Active Directory Event Logs, LDAP\n• Endpoint: Windows Event Logs, Sysmon, EDR alerts\n• Database: Login attempts, Query logs\n• Email Gateway: Phishing, Malware attachments\n• Cloud: AWS CloudTrail, Azure Activity Logs\n\nLog Retention:\n• PDPA ไทย: เก็บ Log อย่างน้อย 90 วัน\n• PCI-DSS: เก็บ 12 เดือน (3 เดือนต้อง Online)\n• ควรเก็บทั้ง Raw Log และ Parsed Events"
+      },
+      {
+        "type": "content",
+        "heading": "Correlation Rules และ Use Cases",
+        "text": "Correlation คือการนำ Events หลายรายการมาวิเคราะห์ร่วมกันเพื่อตรวจจับภัยคุกคาม\n\nตัวอย่าง Correlation Rules:\n• Brute Force: Failed login > 5 ครั้งใน 1 นาที จาก IP เดียว\n• Impossible Travel: Login จากไทย และ จากรัสเซีย ห่างกัน 30 นาที\n• Lateral Movement: SMB Connection จาก Workstation ไปยัง Server หลายๆ เครื่อง\n• Data Exfiltration: Upload ข้อมูลออกนอก > 1 GB ในช่วงดึก\n• Malware C2: DNS Query ไปยัง Domain ที่อยู่ใน Blacklist\n\nSIEM Alert Levels:\n• Critical: ต้องตอบสนองทันที (เช่น Active Ransomware)\n• High: ต้องตรวจสอบภายใน 1 ชั่วโมง\n• Medium: ตรวจสอบภายใน 24 ชั่วโมง\n• Low: Review ตามรอบปกติ"
+      },
+      {
+        "type": "quiz",
+        "question": "แพลตฟอร์มที่ทำหน้าที่รวบรวม Log จากหลายแหล่งมาวิเคราะห์ความปลอดภัย ย่อมาจากอะไร?",
+        "answer": "siem",
+        "hint": "Level 1: เป็นคำย่อ 4 ตัวอักษรที่เกี่ยวกับ Security Information\nLevel 2: S-I-E-...\nLevel 3: คำตอบคือ siem ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "log-analysis",
+    "title": "Log Analysis 101",
+    "icon": "📜",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "ความสำคัญของ Log Analysis",
+        "text": "Log คือ 'พยานปากสำคัญ' ในที่เกิดเหตุ ช่วยตอบคำถาม Who, What, When, Where, How\n\nประเภท Log ที่สำคัญ:\n• Authentication Log (/var/log/auth.log): การ Login ผ่าน SSH, sudo\n• System Log (/var/log/syslog): เหตุการณ์ทั่วไปของ OS\n• Web Server Log (/var/log/apache2/access.log): HTTP Requests\n• Windows Event Log: Event ต่างๆ ใน Windows\n\nรูปแบบ Log มาตรฐาน:\n• Syslog: timestamp hostname process[pid]: message\n• CEF (Common Event Format): ใช้ใน Security Products\n• JSON: เหมาะกับ Modern SIEM\n• W3C Extended Log: Web Server Log"
+      },
+      {
+        "type": "content",
+        "heading": "Windows Event IDs ที่ต้องรู้จัก",
+        "text": "Windows Event Log เก็บ Event ในรูปแบบ Event ID ที่เป็นตัวเลข:\n\nสำคัญสำหรับ Security:\n• 4624: Successful Login (สำเร็จ)\n• 4625: Failed Login (ล้มเหลว)\n• 4648: Explicit Credential Login (Runas)\n• 4720: User Account Created\n• 4722: User Account Enabled\n• 4726: User Account Deleted\n• 4728: User Added to Security Group\n• 4732: User Added to Local Group\n• 4756: User Added to Universal Group\n• 4771: Kerberos Pre-auth Failed (Brute Force)\n• 7045: New Service Installed (Malware Persistence)\n• 4688: Process Created (ต้องเปิด Audit ก่อน)\n\nLogon Types:\n• Type 2: Interactive (นั่งที่เครื่อง)\n• Type 3: Network (SMB, RDP)\n• Type 10: Remote Interactive (RDP)"
+      },
+      {
+        "type": "content",
+        "heading": "การวิเคราะห์ Log เพื่อตรวจจับการโจมตี",
+        "text": "เทคนิคการวิเคราะห์ Log:\n\n1. Baselining:\n• กำหนด 'ปกติ' คืออะไร เช่น Login ปกติจาก IP ไหน เวลาไหน\n• ความผิดปกติที่เบี่ยงเบนจาก Baseline คือสัญญาณเตือน\n\n2. Pattern Matching:\n• grep/regex หา Pattern เฉพาะ เช่น 'Failed', 'Error', 'denied'\n\n3. Frequency Analysis:\n• นับ Event ที่เกิดถี่ผิดปกติ เช่น Login 100 ครั้งใน 1 นาที\n\n4. Correlation:\n• Failed Login ตามด้วย Successful Login จาก IP เดียว = Brute Force สำเร็จ\n• New Process ที่ Parent เป็น Word/Excel = Macro Malware\n\n5. Timeline Analysis:\n• เรียง Event ตาม Timestamp สร้าง Attack Timeline\n\nเครื่องมือ:\n• grep, awk, sort, uniq -- CLI Analysis\n• jq -- วิเคราะห์ JSON Log\n• Elastic Stack (ELK) -- Visualization"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "# ตัวอย่าง Log เลียนแบบการพยายามเดารหัสผ่าน\nAug 28 10:14:52 server sshd[1204]: Failed password for root from 192.168.1.100 port 38290\n\n# นับ Failed Login แยกตาม IP\ngrep 'Failed password' /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn\n\n# หา IP ที่ Login สำเร็จหลังจาก Fail หลายครั้ง\ngrep 'Accepted password' /var/log/auth.log | awk '{print $11}'\n\n# ดู Sudo usage\ngrep 'sudo' /var/log/auth.log | grep -v 'pam_unix'"
+      },
+      {
+        "type": "quiz",
+        "question": "จาก Log ตัวอย่าง ผู้โจมตีมาจาก IP Address หมายเลขใด?",
+        "answer": "192.168.1.100",
+        "hint": "Level 1: มองหาหมายเลข IP ที่อยู่หลังคำว่า 'from'\nLevel 2: เป็นหมายเลขที่ขึ้นต้นด้วย 192\nLevel 3: ตอบหมายเลข '192.168.1.100' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "การโจมตีที่พยายามส่งรหัสผ่านผิดหลายๆ ครั้งเพื่อเดารหัส เรียกว่าเทคนิคใด?",
+        "answer": "brute force",
+        "hint": "Level 1: เป็นคำศัพท์ 2 พยางค์ที่แปลว่า 'การใช้กำลังหักโหม'\nLevel 2: คำแรกคือ Brute คำหลังคือ Force\nLevel 3: พิมพ์ว่า 'brute force' ได้เลยค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "incident-response",
+    "title": "Incident Response",
+    "icon": "🚨",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "NIST Incident Response Life Cycle",
+        "text": "NIST SP 800-61 กำหนด Incident Response ออกเป็น 4 ขั้นตอน:\n\n1. Preparation:\n• สร้าง IR Plan, Playbook\n• เตรียมทีม IR (CSIRT)\n• ตั้งค่า Monitoring Tools\n• ฝึกซ้อม Tabletop Exercise\n\n2. Detection & Analysis:\n• ตรวจพบ Incident จาก SIEM/IDS/EDR/User Report\n• วิเคราะห์ประเภทการโจมตี (Malware, Breach, DoS)\n• Triage: ประเมินความรุนแรง\n\n3. Containment, Eradication & Recovery:\n• Short-term Containment: แยก Host ออก\n• Long-term Containment: Patch ช่องโหว่\n• Eradication: ลบ Malware, ปิด Backdoor\n• Recovery: กู้คืนระบบจาก Clean Backup\n\n4. Post-Incident Activity:\n• After Action Review / Lessons Learned\n• Update IR Plan\n• Report ตาม Compliance"
+      },
+      {
+        "type": "content",
+        "heading": "Digital Forensics: การเก็บหลักฐาน",
+        "text": "เมื่อเกิด Incident ต้องเก็บหลักฐานตามลำดับความสำคัญ (Order of Volatility):\n\n1. CPU Registers และ Cache (หายเร็วสุด)\n2. RAM / Memory Dump\n3. Network Connections ที่กำลัง Active\n4. Running Processes\n5. Disk Storage\n6. Archive Media (Log Files)\n7. Physical Evidence (หายช้าสุด)\n\nหลักการ:\n• Chain of Custody: บันทึกว่าใครแตะหลักฐานบ้าง\n• Write Blocker: ป้องกันการเขียนทับ Drive ต้นฉบับ\n• Hashing: MD5/SHA256 ยืนยัน Integrity ของหลักฐาน\n\nเครื่องมือ Forensics:\n• Volatility: วิเคราะห์ Memory Dump\n• Autopsy: GUI สำหรับ Disk Forensics\n• Wireshark: วิเคราะห์ PCAP\n• FTK (Forensic Toolkit)\n• EnCase"
+      },
+      {
+        "type": "content",
+        "heading": "Threat Intelligence และ IOC",
+        "text": "Threat Intelligence คือข้อมูลที่ช่วย Blue Team เข้าใจและคาดการณ์ภัยคุกคาม\n\nIOC (Indicators of Compromise) คือหลักฐานที่บอกว่าระบบถูกโจมตีแล้ว:\n• File Hash: MD5/SHA256 ของไฟล์มัลแวร์\n• IP Address: เซิร์ฟเวอร์ C2\n• Domain: โดเมน Phishing\n• URL: URL ที่ใช้ดาวน์โหลด Payload\n• Registry Key: Key ที่ Malware ใช้ Persistence\n\nTTP (Tactics, Techniques, and Procedures):\n• MITRE ATT&CK Framework: ฐานข้อมูล TTP ที่ครอบคลุม\n• แต่ละ APT Group มี TTP เฉพาะตัว\n\nThreat Intel Sources:\n• VirusTotal: ตรวจสอบ Hash, URL, IP\n• AlienVault OTX: Community Threat Intel\n• MISP: Sharing Platform\n• US-CERT, CISA: Government Advisories"
+      },
+      {
+        "type": "quiz",
+        "question": "ขั้นตอนการ 'จำกัดพื้นที่ความเสียหาย' ไม่ให้ลุกลามไปยังระบบอื่น คือข้อใด (ใช้ภาษาอังกฤษ)",
+        "answer": "containment",
+        "hint": "Level 1: ภาษาอังกฤษขึ้นต้นด้วยตัว C\nLevel 2: คำศัพท์นี้แปลตรงตัวว่า 'การกักกั้น'\nLevel 3: คำตอบคือ containment ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "siem-sim",
+    "title": "SIEM Simulator",
+    "icon": "🕹️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "วิธีอ่านและวิเคราะห์ SIEM Dashboard",
+        "text": "เมื่อใช้งาน SIEM Dashboard สิ่งที่ต้องทำ:\n\n1. ดู Alert Summary: มี Alert ระดับ Critical/High เป็นพิเศษหรือไม่\n2. ตรวจสอบ Top Talkers: IP ไหนส่ง Traffic มากผิดปกติ\n3. ดู Authentication Events: มี Failed Login ถี่ผิดปกติหรือไม่\n4. ตรวจสอบ Geographic Anomaly: มี Login จากต่างประเทศแปลกๆ หรือไม่\n\nเมื่อพบ Brute Force:\n1. ยืนยัน Alert โดยดู Log โดยตรง\n2. ระบุ Source IP\n3. Block IP ที่ Firewall\n4. ตรวจสอบว่ามี Login สำเร็จจาก IP นั้นหรือไม่\n5. ถ้าสำเร็จ: เปลี่ยนรหัสผ่านทันที ตรวจสอบกิจกรรม\n6. บันทึก Incident Report"
+      },
+      {
+        "type": "siem_simulator",
+        "logs": [
+          {
+            "time": "10:15:22",
+            "source": "103.45.67.89",
+            "dest": "10.0.0.10",
+            "event": "Failed SSH login (root)"
+          },
+          {
+            "time": "10:15:30",
+            "source": "103.45.67.89",
+            "dest": "10.0.0.10",
+            "event": "Successful SSH login (root)"
+          }
+        ],
+        "question": "ตรวจสอบจาก Log ด้านบน พบการโจมตีแบบ Brute Force จาก IP Address ใด?",
+        "answer": "103.45.67.89",
+        "flag": "FLAG_B0K1_LNWZ4",
+        "hint": "Level 1: มองหา IP ที่ทำพิรุธพยายาม Login รัวๆ\nLevel 2: IP นี้ขึ้นต้นด้วย 103\nLevel 3: พิมพ์หมายเลข '103.45.67.89' ค่ะ"
+      }
+    ]
+  }
+]

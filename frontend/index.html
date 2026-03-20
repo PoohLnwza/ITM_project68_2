@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyberpark — Cybersecurity Learning Platform</title>
+    <meta
+      name="description"
+      content="Cyberpark: แพลตฟอร์มเรียนรู้ Cybersecurity สำหรับสาย Technical และ Non-Technical"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="assets/images/bot-avatar.png" />
+  </head>
+
+  <body>
+    <div class="app-wrapper">
+      <div class="app-container">
+        <!-- ─── SIDEBAR ─── -->
+        <nav class="sidebar">
+          <div class="sidebar-logo">CYBER<br />PARK</div>
+          <p class="sidebar-desc">CYBER TRAINING SYS</p>
+
+          <div class="nav-menu">
+            <a href="#" class="nav-link active">
+              <span>HOME</span>
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="nav-link"
+              onclick="
+                Auth.handleSidebarPathClick(
+                  'non-technical',
+                  'pages/nontechnical.html',
+                )
+              "
+            >
+              <span>NON-TECHNICAL</span>
+            </a>
+            <a
+              href="javascript:void(0)"
+              class="nav-link orange"
+              onclick="
+                Auth.handleSidebarPathClick('technical', 'pages/technical.html')
+              "
+            >
+              <span>TECHNICAL</span>
+            </a>
+            <a
+              href="#"
+              class="nav-link"
+              id="profile-nav-btn"
+              onclick="window.location.href = 'pages/profile.html'"
+            >
+              <span>ACCESS SYSTEM</span>
+            </a>
+          </div>
+        </nav>
+
+        <!-- ─── MAIN CONTENT ─── -->
+        <main class="main-content">
+          <div class="container">
+            <header class="header">
+              <h1 class="title glitch" data-text="CYBERPARK">CYBERPARK</h1>
+              <p class="subtitle">
+                CHOOSE YOUR PATH<span class="cursor-blink"></span>
+              </p>
+            </header>
+
+            <p class="terminal-prompt">
+              root@cyberpark:~$ select_path<span class="cursor-blink"></span>
+            </p>
+
+            <!-- Compact User Stats (Hidden if not logged in) -->
+            <div
+              id="home-user-stats"
+              class="home-user-stats"
+              style="display: none"
+            >
+              <div class="stats-header">
+                <span class="stats-label">SENSEI_STATUS</span>
+                <span id="home-rank" class="stats-rank">---</span>
+              </div>
+              <div class="stats-main">
+                <div class="stats-progress-info">
+                  <span>TOTAL_COMPLETION</span>
+                  <span id="home-xp-text">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div id="home-xp-fill" class="fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="landing" class="section active">
+              <div class="path-buttons">
+                <div style="text-decoration: none">
+                  <button
+                    class="path-btn nontech"
+                    id="btn-nontech"
+                    onclick="
+                      handlePathClick(
+                        'non-technical',
+                        'pages/nontechnical.html',
+                      )
+                    "
+                  >
+                    <span class="icon">🛡️</span>
+                    <span class="label">
+                      <span class="name">NON-TECHNICAL PATH</span>
+                      <span class="desc"
+                        >เรียนรู้ภัยคุกคามไซเบอร์ที่ทุกคนต้องรู้</span
+                      >
+                    </span>
+                  </button>
+                </div>
+
+                <div style="text-decoration: none">
+                  <button
+                    class="path-btn tech"
+                    id="btn-tech"
+                    onclick="
+                      handlePathClick('technical', 'pages/technical.html')
+                    "
+                  >
+                    <span class="icon">⚡</span>
+                    <span class="label">
+                      <span class="name">TECHNICAL PATH</span>
+                      <span class="desc"
+                        >ฝึกทักษะด้าน Cybersecurity แบบ Hands-on</span
+                      >
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Global Leaderboard -->
+            <div class="leaderboard-container">
+              <div class="lb-header-title">🏆 GLOBAL RANKINGS</div>
+              <div class="lb-table">
+                <div class="lb-row lb-head">
+                  <span class="lb-rank">#</span>
+                  <span class="lb-name">AGENT</span>
+                  <span class="lb-xp">TOTAL XP</span>
+                </div>
+                <div id="leaderboard-list">
+                  <div class="lb-row loading">CONNECTING TO HQ...</div>
+                </div>
+              </div>
+            </div>
+
+            <footer class="footer">
+              (c) 2026 Cyberpark — สนับสนุนโดย โครงการคนละครึ่ง พลัส+
+            </footer>
+          </div>
+        </main>
+      </div>
+      <!-- Mobile sidebar toggle -->
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        onclick="
+          document.querySelector('.sidebar').classList.toggle('open');
+          this.textContent = this.textContent === '☰' ? '✕' : '☰';
+        "
+      >
+        ☰
+      </button>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const token =
+          typeof getToken === 'function'
+            ? getToken()
+            : (window.Auth ? window.Auth.getToken() : null);
+        const navBtn = document.getElementById('profile-nav-btn');
+        const homeStats = document.getElementById('home-user-stats');
+
+     
+        fetchLeaderboard();
+
+        if (token) {
+          navBtn.innerHTML = '<span>AGENT PROFILE</span>';
+          navBtn.onclick = () => (window.location.href = 'pages/profile.html');
+
+          if (window.Auth) {
+            const profile = await window.Auth.getMe();
+            if (profile && profile.chosen_path) {
+              window.userChosenPath = profile.chosen_path;
+              updatePathButtonsUI(profile.chosen_path);
+            }
+
+            if (profile && profile.progress) {
+              try {
+                const MODS = [
+                  'phishing',
+                  'social',
+                  'linux',
+                  'network',
+                  'defensive',
+                  'offensive',
+                ];
+                const RANKS = [
+                  [0, 'ROOKIE'],
+                  [20, 'INITIATE'],
+                  [40, 'ANALYST'],
+                  [60, 'SPECIALIST'],
+                  [80, 'OPERATOR'],
+                  [100, 'CYBER SENSEI'],
+                ];
+
+                let total = 0;
+                for (const m of MODS) {
+                  const modData = profile.progress[m];
+                  const v = modData ? modData.percent || 0 : 0;
+                  total += v;
+                }
+
+                const avg = Math.round(total / MODS.length);
+                let rank = RANKS[0][1];
+                for (const [threshold, name] of RANKS) {
+                  if (avg >= threshold) rank = name;
+                }
+
+                // Update Home Dashboard UI
+                document.getElementById('home-rank').textContent = rank;
+                document.getElementById('home-xp-text').textContent = avg + '%';
+                document.getElementById('home-xp-fill').style.width = avg + '%';
+                homeStats.style.display = 'block';
+              } catch (e) {
+                console.error('Home Dashboard error:', e);
+              }
+            }
+          }
+        } else {
+          navBtn.innerHTML = '<span>ACCESS SYSTEM</span>';
+          navBtn.onclick = () => (window.location.href = 'pages/profile.html');
+          if (homeStats) homeStats.style.display = 'none';
+        }
+      });
+
+      function updatePathButtonsUI(path) {
+        const btnTech = document.getElementById('btn-tech');
+        const btnNonTech = document.getElementById('btn-nontech');
+
+        // Remove existing tags
+        document
+          .querySelectorAll('.path-status-tag')
+          .forEach((el) => el.remove());
+
+        const tag = document.createElement('span');
+        tag.className = 'path-status-tag';
+        tag.textContent = '[ IN PROGRESS ]';
+        tag.style.fontSize = '8px';
+        tag.style.color = 'var(--cyan)';
+        tag.style.display = 'block';
+        tag.style.marginTop = '4px';
+        tag.style.fontFamily = "'Press Start 2P', monospace";
+
+        if (path === 'technical') {
+          btnTech.appendChild(tag);
+          btnTech.classList.add('active-path');
+        } else if (path === 'non-technical') {
+          btnNonTech.appendChild(tag);
+          btnNonTech.classList.add('active-path');
+        }
+      }
+
+      async function handlePathClick(path, url) {
+        const token = window.Auth ? window.Auth.getToken() : null;
+        if (!token) {
+          if (window.Auth) window.Auth.requireAuth();
+          return;
+        }
+
+        if (window.userChosenPath && window.userChosenPath !== path) {
+          const confirmChange = confirm(
+            'คุณต้องการเปลี่ยนสายการเรียนใช่หรือไม่? (Class ของคุณจะถูกเปลี่ยนตามสายที่เลือกใหม่)',
+          );
+          if (!confirmChange) return;
+        }
+
+        if (window.Auth && window.Auth.setChosenPath) {
+          const res = await window.Auth.setChosenPath(path);
+          if (res.success) {
+            window.location.href = url;
+          } else {
+            alert('เกิดข้อผิดพลาดในการเลือกสาย: ' + res.message);
+          }
+        } else {
+          window.location.href = url;
+        }
+      }
+
+      async function fetchLeaderboard() {
+        const list = document.getElementById('leaderboard-list');
+        const currentUserEmail = window.Auth ? window.Auth.getEmail() : null;
+
+        try {
+          const res = await fetch(window.location.origin + '/api/leaderboard');
+          const data = await res.json();
+          const leaderboard = data.leaderboard || [];
+
+          if (leaderboard.length === 0) {
+            list.innerHTML =
+              '<div class="lb-row loading">NO AGENTS REGISTERED YET.</div>';
+            return;
+          }
+
+          let html = '';
+          leaderboard.forEach((entry, idx) => {
+            const isCurrentUser =
+              currentUserEmail === entry.email_masked.replace('***', ''); 
+
+            const emailPrefix = currentUserEmail
+              ? currentUserEmail.split('@')[0]
+              : '';
+            const maskedPrefix = entry.email_masked
+              .split('@')[0]
+              .replace('***', '');
+            const rowIsMe =
+              currentUserEmail &&
+              emailPrefix.startsWith(maskedPrefix) &&
+              entry.name === emailPrefix.toUpperCase();
+
+            const rankClass = idx < 3 ? `top-${idx + 1}` : '';
+            const meClass = rowIsMe ? 'current-user' : '';
+
+            html += `
+              <div class="lb-row ${rankClass} ${meClass}">
+                <span class="lb-rank">${idx + 1}</span>
+                <span class="lb-name">
+                  ${entry.name}
+                  <span class="masked-email">${entry.email_masked}</span>
+                </span>
+                <span class="lb-xp">${entry.xp} XP</span>
+              </div>
+            `;
+          });
+          list.innerHTML = html;
+        } catch (e) {
+          console.error('Leaderboard Fetch error:', e);
+          list.innerHTML =
+            '<div class="lb-row loading" style="color: var(--pink)">FAILED TO LINK TO SATELLITE.</div>';
+        }
+      }
+    </script>
+  </body>
+</html>

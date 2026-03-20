@@ -1,0 +1,184 @@
+[
+  {
+    "id": "tcpip",
+    "title": "TCP/IP Fundamentals",
+    "icon": "🌐",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "โมเดล TCP/IP และหัวใจของอินเทอร์เน็ต",
+        "text": "TCP/IP (Transmission Control Protocol / Internet Protocol) เป็นชุดโปรโตคอลมาตรฐานที่ทำให้อุปกรณ์ทั่วโลกคุยกันรู้เรื่อง แบ่งเป็น 4 ชั้นหลัก:\n1. Application Layer -- บริการที่ผู้ใช้เห็น (HTTP, DNS, SSH, FTP, SMTP)\n2. Transport Layer -- การคุมการส่งข้อมูล (TCP - เน้นความถูกต้อง, UDP - เน้นความเร็ว)\n3. Internet Layer -- การระบุที่อยู่และเส้นทาง (IP, ICMP, ARP)\n4. Network Access Layer -- การส่งสัญญาณ (Ethernet, WiFi, Fiber)"
+      },
+      {
+        "type": "content",
+        "heading": "OSI Model 7 ชั้น vs TCP/IP",
+        "text": "OSI Model (Open Systems Interconnection) มี 7 ชั้น เป็นแบบจำลองทางทฤษฎี:\n7. Application -- HTTP, FTP, DNS, SMTP\n6. Presentation -- SSL/TLS, Encryption, Encoding\n5. Session -- การสร้าง/ยุติ Session\n4. Transport -- TCP, UDP\n3. Network -- IP, ICMP, Routing\n2. Data Link -- Ethernet, MAC Address, Switches\n1. Physical -- Cable, WiFi, Hub\n\nจำง่ายๆ ว่า: All People Seem To Need Data Processing\n\nในการ Troubleshoot Network: เริ่มจากชั้น 1 (Physical) ขึ้นไปชั้น 7"
+      },
+      {
+        "type": "content",
+        "heading": "TCP vs UDP ต่างกันอย่างไร?",
+        "text": "TCP (Transmission Control Protocol):\n• Connection-oriented: ต้องทำ 3-Way Handshake ก่อน\n• Reliable: ตรวจสอบว่าข้อมูลถึงปลายทางครบ ส่งใหม่ถ้าหาย\n• Ordered: ข้อมูลถึงในลำดับที่ถูกต้อง\n• ใช้สำหรับ: HTTP, HTTPS, SSH, FTP, Email\n\nUDP (User Datagram Protocol):\n• Connectionless: ส่งทันทีไม่ต้องรอตอบรับ\n• Fast: ไม่มี overhead ในการตรวจสอบ\n• Unreliable: ไม่รับประกันว่าข้อมูลถึง\n• ใช้สำหรับ: DNS, VoIP, Video Streaming, Gaming, DHCP\n\nในการโจมตี: UDP Flood ใช้ส่ง UDP packets จำนวนมากเพื่อทำ DoS"
+      },
+      {
+        "type": "content",
+        "heading": "TCP 3-Way Handshake: การตกลงก่อนส่ง",
+        "text": "ก่อนจะเริ่มส่งข้อมูลจริง TCP จะต้องมีการยืนยัน 3 ขั้นตอนเพื่อความชัวร์:\n1. SYN (Synchronize) -- Client ส่งคำขอเชื่อมต่อพร้อม Sequence Number\n2. SYN-ACK -- Server ตอบตกลงและส่ง Sequence Number ของตัวเอง\n3. ACK -- Client ยืนยันรับทราบ และเริ่มส่ง Data ได้\n\nแฮกเกอร์มักใช้วิธี 'SYN Flood' ส่งคำขอ SYN ไปเยอะๆ แต่ไม่ส่ง ACK กลับ ทำให้เป้าหมายเก็บ Half-open Connection ไว้จนเต็ม Memory เกิด DoS\n\nการป้องกัน SYN Flood: SYN Cookies, Rate Limiting, Firewall Rules"
+      },
+      {
+        "type": "content",
+        "heading": "IP Address: Public, Private และ Subnetting",
+        "text": "IP Address แบ่งเป็น 2 ประเภทหลัก:\n\nPublic IP:\n• มองเห็นได้จากอินเทอร์เน็ต ต้องเช่าจาก ISP\n• ตัวอย่าง: 8.8.8.8 (Google DNS), 1.1.1.1 (Cloudflare)\n\nPrivate IP (RFC 1918):\n• ใช้ภายในเครือข่ายส่วนตัว ไม่ Route บน Internet\n• 10.0.0.0/8 (Class A)\n• 172.16.0.0/12 (Class B)\n• 192.168.0.0/16 (Class C)\n\nSpecial IP:\n• 127.0.0.1 -- Loopback (ตัวเอง)\n• 0.0.0.0 -- Any address\n• 255.255.255.255 -- Broadcast\n\nCIDR Notation: 192.168.1.0/24 หมายถึง subnet mask 255.255.255.0 มี IP ใช้ได้ 254 เครื่อง"
+      },
+      {
+        "type": "content",
+        "heading": "เลข Port ที่ต้องรู้ (Well-known Ports)",
+        "text": "Port คือ 'เลขที่ห้อง' ของแต่ละบริการบนเซิร์ฟเวอร์ แบ่งเป็น 3 ช่วง:\n• Well-known Ports: 0-1023 (ต้องใช้สิทธิ์ root)\n• Registered Ports: 1024-49151\n• Dynamic/Ephemeral Ports: 49152-65535\n\nPort สำคัญที่ต้องจำ:\n• 21: FTP (File Transfer)\n• 22: SSH (Secure Shell)\n• 23: Telnet (ไม่เข้ารหัส ควรหลีกเลี่ยง)\n• 25: SMTP (Email ส่ง)\n• 53: DNS (Domain Name System)\n• 80: HTTP (เว็บไม่เข้ารหัส)\n• 110: POP3 (Email รับ)\n• 143: IMAP (Email sync)\n• 443: HTTPS (เว็บเข้ารหัส SSL/TLS)\n• 445: SMB (Windows File Sharing)\n• 3306: MySQL\n• 3389: RDP (Windows Remote Desktop)\n• 8080, 8443: HTTP/HTTPS ทางเลือก"
+      },
+      {
+        "type": "content",
+        "heading": "DNS: ระบบแปลงชื่อเป็น IP",
+        "text": "DNS (Domain Name System) คือ 'สมุดโทรศัพท์ของอินเทอร์เน็ต' แปลง Domain Name → IP Address\n\nกระบวนการ DNS Resolution:\n1. ผู้ใช้พิมพ์ google.com\n2. เครื่องเช็ค Cache ก่อน (ถ้ามีแล้วใช้เลย)\n3. ถามไปที่ Recursive Resolver (DNS ของ ISP)\n4. Resolver ถาม Root Name Server (13 เครื่องทั่วโลก)\n5. Root ชี้ไปที่ TLD Server (.com)\n6. TLD ชี้ไปที่ Authoritative Server ของ google.com\n7. ได้ IP กลับมา\n\nประเภท DNS Record:\n• A: ชี้ Domain → IPv4\n• AAAA: ชี้ Domain → IPv6\n• MX: Mail Server\n• CNAME: Alias (ชื่อเล่น)\n• TXT: ข้อมูลทั่วไป (ใช้ตรวจสอบ SPF, DKIM)\n• PTR: Reverse DNS (IP → Domain)\n\nการโจมตี: DNS Spoofing/Poisoning คือการปลอม DNS Response ให้ชี้ไป IP อันตราย"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "# ดู IP ของตัวเอง\nip addr show\n\n# ทดสอบการเชื่อมต่อ\nping -c 4 8.8.8.8\n\n# ดูเส้นทาง Packet\ntraceroute google.com\n\n# ค้นหา IP ของ Domain\nnslookup google.com\ndig google.com A\ndig google.com MX  # ดู Mail Server\n\n# ดู ARP Table (IP → MAC)\narp -a\n\n# ดู Routing Table\nip route show"
+      },
+      {
+        "type": "quiz",
+        "question": "Port ใดใช้สำหรับ HTTPS?",
+        "answer": "443",
+        "hint": "Level 1: เป็นเลขพอร์ตมาตรฐานสำหรับเว็บที่มีการเข้ารหัส\nLevel 2: เป็นเลข 3 หลัก ขึ้นต้นด้วย 4\nLevel 3: คำตอบคือ 443 ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "TCP 3-Way Handshake มีขั้นตอนอะไรบ้าง?",
+        "answer": "SYN, SYN-ACK, ACK",
+        "hint": "Level 1: ประกอบด้วยชื่อย่อ 3 ชุด คั่นด้วยคอมม่า\nLevel 2: เริ่มจากขอกวักมือเรียก ยืนยันว่าเห็น และตกลงรับทราบ\nLevel 3: พิมพ์ว่า 'SYN, SYN-ACK, ACK' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "IP range 192.168.0.0/16 เป็น IP ประเภทใด?",
+        "answer": "Private IP",
+        "hint": "Level 1: เป็น IP ที่ใช้ได้เฉพาะในบ้านหรือในออฟฟิศเท่านั้น\nLevel 2: เรียกว่า IP ภายใน หรือ Private...\nLevel 3: คำตอบคือ 'Private IP' ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "packets",
+    "title": "Packet Analysis",
+    "icon": "📦",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "การห่อหุ้มข้อมูล (Encapsulation)",
+        "text": "ข้อมูลที่เราส่งจะถูก 'ห่อ' (Encapsulate) เป็นชั้นๆ เหมือนจดหมายในซอง:\n- Payload: ข้อมูลจริง (เช่น HTML หน้าเว็บ)\n- TCP/UDP Segment: ระบุพอร์ตต้นทาง/ปลายทาง\n- IP Packet: ระบุ IP ต้นทาง/ปลายทาง\n- Ethernet Frame: ระบุ MAC Address ต้นทาง/ปลายทาง\n\nกระบวนการตรงข้าม (Decapsulation) เกิดที่ปลายทาง โดยแกะชั้นออกทีละชั้น\n\nในการวิเคราะห์ Packet: Wireshark จะแสดง Header ของแต่ละชั้นให้เห็นชัดเจน"
+      },
+      {
+        "type": "content",
+        "heading": "TCP Flags: สัญญาณไฟจราจรของเน็ต",
+        "text": "TCP Flags คือบิตใน Header ที่บอกสถานะและวัตถุประสงค์ของ Packet:\n• SYN (S): เริ่มเชื่อมต่อ (Synchronize)\n• ACK (A): รับทราบ (Acknowledge)\n• FIN (F): จบการเชื่อมต่อตามปกติ\n• RST (R): รีเซ็ตการเชื่อมต่อทันที (Reset)\n• PSH (P): ดันข้อมูลส่งเลยไม่ต้องรอ Buffer\n• URG (U): ข้อมูลเร่งด่วน\n\nPatterns ที่สำคัญ:\n• Normal Connection: SYN → SYN-ACK → ACK\n• Port Scan: แพ็กเก็ต SYN ไปยัง Port หลายๆ พอร์ต\n• Stealth Scan: SYN ส่งไป ถ้าพอร์ตเปิด จะได้ SYN-ACK แต่ไม่ตอบ ACK กลับ\n• XMAS Scan: ส่ง FIN+PSH+URG พร้อมกัน (เหมือนไฟคริสมาส)"
+      },
+      {
+        "type": "content",
+        "heading": "Wireshark: เครื่องมือวิเคราะห์ Packet",
+        "text": "Wireshark คือ Network Protocol Analyzer ที่นิยมใช้มากที่สุดในโลก\n\nฟีเจอร์หลัก:\n• จับ Packet แบบ Real-time จาก Network Interface\n• เปิดไฟล์ .pcap ได้\n• Filter ดู Packet เฉพาะที่ต้องการ\n• Follow TCP Stream -- ดู HTTP conversation ทั้งหมด\n• Decode Protocols อัตโนมัติ\n\nDisplay Filters ที่ใช้บ่อย:\n• ip.addr == 192.168.1.1 -- Filter ตาม IP\n• tcp.port == 80 -- Filter ตาม Port\n• http -- แสดงเฉพาะ HTTP\n• dns -- แสดงเฉพาะ DNS\n• tcp.flags.syn == 1 -- แสดงเฉพาะ SYN packets\n• http.request.method == \"POST\" -- POST requests\n\nCapture Filters (ก่อนจับ):\n• port 80 -- จับเฉพาะพอร์ต 80\n• host 8.8.8.8 -- จับ traffic จาก/ไป IP นี้"
+      },
+      {
+        "type": "content",
+        "heading": "ICMP: โปรโตคอลแจ้งข้อผิดพลาดและทดสอบ",
+        "text": "ICMP (Internet Control Message Protocol) ใช้สำหรับแจ้ง Error และทดสอบการเชื่อมต่อ ไม่มี Port\n\nประเภท ICMP ที่สำคัญ:\n• Type 0: Echo Reply (Ping ตอบกลับ)\n• Type 3: Destination Unreachable (ถึงปลายทางไม่ได้)\n• Type 5: Redirect\n• Type 8: Echo Request (Ping ขาไป)\n• Type 11: Time Exceeded (TTL หมด ใช้ใน traceroute)\n\nการโจมตีโดยใช้ ICMP:\n• Ping Flood: ส่ง Echo Request จำนวนมาก (DoS)\n• Ping of Death: ส่ง ICMP ที่ขนาดใหญ่เกินขนาดมาตรฐาน\n• ICMP Tunneling: ซ่อน Data Exfiltration ใน ICMP packets"
+      },
+      {
+        "type": "quiz",
+        "question": "TCP flag ใดใช้เริ่มการเชื่อมต่อ?",
+        "answer": "SYN",
+        "hint": "Level 1: เป็นแฟลกแรกสุดที่ใช้ใน 3-way handshake\nLevel 2: ย่อมาจาก Synchronize\nLevel 3: พิมพ์ว่า 'SYN' ได้เลยค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "XMAS scan ใช้ TCP flags อะไรรวมกัน?",
+        "answer": "FIN+PSH+URG",
+        "hint": "Level 1: เป็นการเปิดแฟลกทั้งหมดพร้อมกัน ให้เหมือนไฟต้นคริสมาสต์\nLevel 2: ประกอบด้วย F, P, U\nLevel 3: พิมพ์ว่า 'FIN+PSH+URG' ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "traffic",
+    "title": "Network Traffic Monitoring",
+    "icon": "👁️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "ทำไมต้อง Monitor Network?",
+        "text": "Blue Team ต้องเฝ้าดู Traffic ตลอดเวลาเพื่อตรวจจับ:\n• Malware เรียกกลับฐาน (C2 - Command and Control)\n• การแอบขโมยข้อมูลออก (Data Exfiltration)\n• การสแกนภายในระบบ (Lateral Movement)\n• พฤติกรรมผิดปกติ (Anomaly Detection)\n\nเครื่องมือหลัก:\n• tcpdump: เก็บ Packet แบบดิบๆ ผ่าน CLI\n• Wireshark: แกะดู Packet แบบกราฟิก\n• Suricata: IDS/IPS ตรวจจับด้วย Rule\n• Snort: IDS/IPS ยอดนิยม\n• Zeek (Bro): วิเคราะห์ Traffic เชิงพฤติกรรม\n• ntopng: Network Traffic Monitor แบบ Dashboard"
+      },
+      {
+        "type": "content",
+        "heading": "tcpdump: คำสั่งจับ Packet ใน CLI",
+        "text": "tcpdump เป็นเครื่องมือ CLI สำหรับจับและวิเคราะห์ Network Packet\n\nOptions สำคัญ:\n• -i eth0: ระบุ Interface\n• -w file.pcap: บันทึกลงไฟล์\n• -r file.pcap: อ่านจากไฟล์\n• -n: ไม่ Resolve hostname (เร็วกว่า)\n• -v, -vv: Verbose mode\n• -c 100: จับแค่ 100 packets\n\nFilter ที่ใช้บ่อย:\n• port 80: เฉพาะพอร์ต 80\n• host 1.2.3.4: เฉพาะ IP นั้น\n• tcp and port 443: เฉพาะ HTTPS\n• not port 22: ยกเว้น SSH\n• src host 10.0.0.1: เฉพาะต้นทาง IP นั้น\n• dst port 53: เฉพาะปลายทาง DNS"
+      },
+      {
+        "type": "content",
+        "heading": "รูปแบบ Traffic ที่น่าสงสัย (IoC)",
+        "text": "Indicators of Compromise (IoC) ทางด้าน Network:\n\n• Beaconing: Malware ส่ง Traffic กลับ C2 Server เป็นช่วงเวลาสม่ำเสมอ (เช่นทุก 60 วินาที)\n• Unusual Port Usage: เว็บเซิร์ฟเวอร์ใช้พอร์ตผิดปกติ หรือ Service รันบน High Port\n• Large Outbound Transfer: ข้อมูลออกไปนอกจำนวนมากในช่วงกลางคืน\n• DNS Tunneling: DNS Query ที่ยาวผิดปกติ มักใช้ซ่อน Data\n• Scanning: มี SYN หรือ ICMP ไปยัง IP หลายๆ IP ในช่วงเวลาสั้น\n• Unexpected Protocol: HTTPS ไปยัง IP ที่ไม่รู้จัก ไม่มี Domain\n\nเครื่องมือวิเคราะห์ NetFlow:\n• NetFlow/sFlow: เก็บ Metadata ของ Connection (src/dst/bytes)\n• ntopng, ELK Stack: Visualize Network Traffic"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "# จับ Packet เฉพาะพอร์ต 80\nsudo tcpdump -i eth0 port 80\n\n# บันทึกเป็นไฟล์ไปเปิดใน Wireshark\nsudo tcpdump -w capture.pcap\n\n# จับ HTTPS traffic\nsudo tcpdump -i eth0 -n tcp and port 443\n\n# ดู DNS queries\nsudo tcpdump -i eth0 -n port 53\n\n# วิเคราะห์ไฟล์ pcap ด้วย tshark\ntshark -r capture.pcap -Y 'http.request'\ntshark -r capture.pcap -Y 'dns' -T fields -e dns.qry.name"
+      },
+      {
+        "type": "quiz",
+        "question": "คำสั่ง tcpdump ใดใช้จับเฉพาะ traffic port 443?",
+        "answer": "tcpdump -i eth0 port 443",
+        "hint": "Level 1: ใช้ฟิลเตอร์คำว่า port ตามด้วยเลข\nLevel 2: ระบุอินเตอร์เฟส -i eth0 และตามด้วย port 443\nLevel 3: พิมพ์ 'tcpdump -i eth0 port 443' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "tshark display filter ใดใช้แสดงเฉพาะ HTTP traffic?",
+        "answer": "http",
+        "hint": "Level 1: พิมพ์ชื่อโปรโตคอลตรงๆ ตัวเล็กทั้งหมด\nLevel 2: พิมพ์คำว่า http\nLevel 3: พิมพ์ 'http' เลยค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "firewall",
+    "title": "Firewall & IDS/IPS",
+    "icon": "🛡️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "กลไกการป้องกันเครือข่าย",
+        "text": "• Firewall: กรอง Packet ตามกฎ (Allow/Deny) ตาม IP, Port, Protocol\n• IDS (Intrusion Detection System): ตรวจจับ แจ้งเตือน แต่ไม่หยุดการโจมตี\n• IPS (Intrusion Prevention System): ตรวจจับ แจ้งเตือน และหยุดยั้งทันที\n• WAF (Web Application Firewall): กรอง HTTP/HTTPS ป้องกัน SQLi, XSS, CSRF\n\nหลักนโยบายที่ดีที่สุด:\n• Default Deny: บล็อกทั้งหมดก่อน แล้วค่อยเปิดเฉพาะที่จำเป็น\n• Principle of Least Privilege: เปิดเฉพาะ Port/Service ที่ต้องใช้จริง"
+      },
+      {
+        "type": "content",
+        "heading": "ประเภทของ Firewall",
+        "text": "Firewall แบ่งตามเทคโนโลยี:\n\n1. Packet Filtering Firewall:\n• ดู IP, Port, Protocol เท่านั้น\n• ไม่เข้าใจ State ของ Connection\n• เร็วแต่ง่ายต่อการ Bypass\n\n2. Stateful Firewall:\n• ติดตาม State ของ Connection (เช่น รู้ว่า Packet นี้เป็นส่วนของ Session ที่อนุมัติแล้ว)\n• ปลอดภัยกว่า Packet Filtering\n\n3. Application Layer Firewall (Proxy Firewall):\n• เข้าใจ Protocol ระดับ Application เช่น HTTP\n• ป้องกันได้ละเอียดกว่า\n\n4. Next-Generation Firewall (NGFW):\n• รวม IPS, Application Control, SSL Inspection\n• เป็น Standard สำหรับองค์กรปัจจุบัน\n\nLinux Firewall:\n• iptables: เครื่องมือดั้งเดิม\n• ufw (Uncomplicated Firewall): ใช้งานง่ายกว่า\n• nftables: รุ่นใหม่แทน iptables"
+      },
+      {
+        "type": "content",
+        "heading": "UFW (Uncomplicated Firewall) และ iptables",
+        "text": "UFW คือ Frontend ที่ใช้งานง่ายสำหรับ iptables:\n\nคำสั่ง UFW:\n• ufw enable/disable -- เปิด/ปิด Firewall\n• ufw status verbose -- ดูสถานะและกฎทั้งหมด\n• ufw allow 22/tcp -- อนุญาต SSH\n• ufw allow 80/tcp -- อนุญาต HTTP\n• ufw deny 23 -- บล็อก Telnet\n• ufw delete allow 80/tcp -- ลบกฎ\n• ufw default deny incoming -- บล็อก Incoming ทั้งหมด\n• ufw default allow outgoing -- อนุญาต Outgoing ทั้งหมด\n\niptables ตัวอย่าง:\n• iptables -L -n -v -- ดูกฎทั้งหมด\n• iptables -A INPUT -p tcp --dport 22 -j ACCEPT -- อนุญาต SSH\n• iptables -A INPUT -j DROP -- บล็อกที่เหลือทั้งหมด"
+      },
+      {
+        "type": "content",
+        "heading": "DMZ และสถาปัตยกรรมเครือข่ายที่ปลอดภัย",
+        "text": "DMZ (Demilitarized Zone) คือโซนกลางระหว่าง Internal Network และ Internet:\n\nสถาปัตยกรรมพื้นฐาน:\nInternet → Firewall → DMZ (Web, Mail Server) → Firewall → Internal Network\n\nประโยชน์:\n• ถ้า Server ใน DMZ ถูกแฮก ผู้โจมตียังไม่สามารถเข้า Internal Network ได้ทันที\n• แยก Public Services ออกจาก Internal ได้ชัดเจน\n\nNetwork Segmentation:\n• VLAN: แบ่ง Logical Network บน Switch เดียว\n• Zero Trust: ไม่เชื่อใคร แม้อยู่ใน Internal Network\n• Micro-segmentation: แบ่งแยกละเอียดในระดับ Workload"
+      },
+      {
+        "type": "quiz",
+        "question": "คำสั่ง UFW ใดใช้อนุญาต SSH?",
+        "answer": "ufw allow 22/tcp",
+        "hint": "Level 1: คำสั่งขึ้นต้นด้วย ufw allow\nLevel 2: SSH รันบนพอร์ต 22 แบบ TCP\nLevel 3: พิมพ์ 'ufw allow 22/tcp' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "IDS กับ IPS ต่างกันอย่างไร?",
+        "answer": "IDS ตรวจจับและแจ้งเตือน IPS ตรวจจับและ block",
+        "hint": "Level 1: IDS มุ่งเน้นไปที่การ 'ตรวจพบ' (Detection)\nLevel 2: IPS มุ่งเน้นไปที่การ 'ป้องกัน' (Prevention)\nLevel 3: อธิบายว่า IDS แค่แจ้งเตือน ส่วน IPS ทั้งเตือนและหยุดยั้งค่ะ"
+      }
+    ]
+  }
+]

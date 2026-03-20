@@ -1,0 +1,200 @@
+/* ═══════════════════════════════════════════
+   SIMULATED TERMINAL — Minimal Theme
+   ═══════════════════════════════════════════ */
+
+/* In-page terminal button (inside content header) */
+.terminal-page-btn {
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  margin-top: 14px;
+  background: transparent;
+  border: 1px solid var(--pink, #e91e8c);
+  color: var(--pink, #e91e8c);
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all 0.2s;
+  display: inline-block;
+}
+.terminal-page-btn:hover {
+  background: var(--pink, #e91e8c);
+  color: #fff;
+  box-shadow: 0 0 15px var(--pink-glow);
+}
+
+.sim-terminal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45vh;
+  z-index: 998;
+  background: rgba(3, 0, 8, 0.98);
+  border-top: 2px solid var(--purple-dim);
+  box-shadow: 0 -10px 30px rgba(139, 68, 204, 0.1);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.sim-terminal.open {
+  transform: translateY(0);
+}
+
+.sim-terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  background: #111;
+  border-bottom: 1px solid #222;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.sim-terminal-dots {
+  display: flex;
+  gap: 5px;
+}
+.sim-terminal-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: block;
+}
+.sim-terminal-dots .d-red {
+  background: #ff5f57;
+}
+.sim-terminal-dots .d-yel {
+  background: #ffbd2e;
+}
+.sim-terminal-dots .d-grn {
+  background: var(--cyan);
+}
+
+.sim-terminal-title {
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 11px;
+  color: #666;
+  flex: 1;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.sim-terminal-close {
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.sim-terminal-close:hover {
+  color: #ff5f57;
+}
+
+/* Output area */
+.sim-terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 14px;
+  font-family: 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.sim-terminal-output::-webkit-scrollbar {
+  width: 4px;
+}
+.sim-terminal-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sim-terminal-output::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+.sim-terminal-output .sim-line {
+  margin-bottom: 2px;
+}
+.sim-terminal-output .sim-prompt {
+  color: var(--cyan);
+  text-shadow: 0 0 5px var(--cyan-dim);
+}
+.sim-terminal-output .sim-cmd {
+  color: #fff;
+}
+.sim-terminal-output .sim-out {
+  color: #eee;
+}
+.sim-terminal-output .sim-err {
+  color: #ff5f57;
+}
+.sim-terminal-output .sim-dir {
+  color: var(--purple);
+}
+.sim-terminal-output .sim-file {
+  color: #eee;
+}
+.sim-terminal-output .sim-exec {
+  color: var(--pink);
+  text-shadow: 0 0 5px var(--pink-glow);
+}
+.sim-terminal-output .sim-info {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Input area */
+.sim-terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-top: 1px solid #222;
+  background: #0a0a0a;
+  flex-shrink: 0;
+}
+
+.sim-terminal-prompt-label {
+  font-family: 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  font-size: 13px;
+  color: var(--cyan);
+  text-shadow: 0 0 5px var(--cyan-dim);
+  white-space: nowrap;
+  margin-right: 6px;
+}
+
+.sim-terminal-input {
+  flex: 1;
+  font-family: 'Fira Code', 'SF Mono', 'Menlo', monospace;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  caret-color: var(--cyan);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sim-terminal {
+    height: 50vh;
+  }
+  .terminal-toggle {
+    right: 70px;
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+  .sim-terminal-output {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+  .sim-terminal-prompt-label,
+  .sim-terminal-input {
+    font-size: 11px;
+  }
+}

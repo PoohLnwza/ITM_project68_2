@@ -1,0 +1,188 @@
+[
+  {
+    "id": "intro",
+    "title": "Introduction to Linux & CLI",
+    "icon": "🐧",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Linux คืออะไร?",
+        "text": "Linux เป็นระบบปฏิบัติการแบบ Open Source ที่ได้รับความนิยมอย่างมากในด้าน Cybersecurity เนื่องจากความยืดหยุ่น ความปลอดภัย และเครื่องมือจำนวนมากที่ใช้ในงาน Security โดย Linux ถูกพัฒนาครั้งแรกในปี 1991 โดย Linus Torvalds และได้กลายเป็นระบบปฏิบัติการหลักของ Server กว่า 90% ทั่วโลก รวมถึง Cloud Computing, IoT Devices และ Android Smartphones\n\nทำไมต้อง Linux ในงาน Cybersecurity?\n• Open Source -- สามารถตรวจสอบ Source Code ได้ มั่นใจเรื่องความปลอดภัย\n• CLI-Centric -- เครื่องมือ Security ส่วนใหญ่ทำงานผ่าน Command Line ทำให้ Automate ได้ง่าย\n• Customizable -- ปรับแต่งระบบได้ลึกถึง Kernel Level\n• Free -- ไม่มีค่าลิขสิทธิ์ เหมาะกับการ Lab และฝึกฝน"
+      },
+      {
+        "type": "content",
+        "heading": "Distributions ยอดนิยมสำหรับงาน Security",
+        "text": "• Kali Linux -- สำหรับ Penetration Testing มี Tools กว่า 600 ตัวติดตั้งมาให้พร้อมใช้\n• Parrot OS -- สำหรับ Pentest และความยืดหยุ่นสูง เบากว่า Kali\n• Ubuntu Server -- สำหรับ Server Administration ทั่วไป มี Community ขนาดใหญ่\n• REMNUX -- สำหรับ Malware Analysis และวิศวกรรมย้อนรอย (Reverse Engineering)\n• BlackArch -- สำหรับ Advanced Pentesting บน Arch Linux มี Tools มากกว่า 2,800 ตัว"
+      },
+      {
+        "type": "content",
+        "heading": "Command Line Interface (CLI)",
+        "text": "CLI (Command Line Interface) คือวิธีหลักในการใช้งาน Linux สำหรับงาน Security เพราะเครื่องมือส่วนใหญ่ไม่มีหน้าจอกราฟิก (GUI) การเชี่ยวชาญ CLI ทำให้คุณสามารถ Automate งาน Security ได้อย่างมีประสิทธิภาพ\n\nหลักการทำงานของ CLI:\n• Shell -- โปรแกรมที่รับคำสั่งจากผู้ใช้ (เช่น Bash, Zsh, Fish)\n• Terminal -- หน้าต่างที่ใช้พิมพ์คำสั่ง\n• Prompt -- เครื่องหมายบอกว่าพร้อมรับคำสั่ง ($ สำหรับ user, # สำหรับ root)"
+      },
+      {
+        "type": "content",
+        "heading": "ประเภทของ Shell ที่ควรรู้จัก",
+        "text": "Shell คือโปรแกรมล่ามคำสั่งระหว่างผู้ใช้กับ Kernel ของระบบปฏิบัติการ ประเภทที่พบบ่อย:\n• Bash (Bourne Again Shell) -- Shell มาตรฐานของ Linux ส่วนใหญ่ ใช้กันอย่างแพร่หลาย\n• Zsh (Z Shell) -- ฟีเจอร์เพิ่มเติมจาก Bash เช่น Auto-complete ที่ดีกว่า ใช้ใน Kali Linux ใหม่\n• Fish -- Shell ที่เป็นมิตรกับผู้ใช้ มี Syntax Highlighting\n• Sh (Bourne Shell) -- Shell ดั้งเดิม พบในสคริปต์โบราณ\n\nดู shell ปัจจุบัน: echo $SHELL\nดู shell ทั้งหมดในระบบ: cat /etc/shells"
+      },
+      {
+        "type": "content",
+        "heading": "Environment Variables และ PATH",
+        "text": "Environment Variables คือตัวแปรระดับระบบที่โปรแกรมต่างๆ ใช้อ่านการตั้งค่า\n\nตัวแปรสำคัญ:\n• PATH -- บอก Shell ว่าจะค้นหาโปรแกรมที่ไหน (เช่น /usr/bin:/usr/local/bin)\n• HOME -- Path ของ Home Directory ปัจจุบัน\n• USER -- ชื่อ User ปัจจุบัน\n• SHELL -- Path ของ Shell ที่กำลังใช้\n\nคำสั่งที่เกี่ยวข้อง:\n• printenv -- แสดง Environment Variables ทั้งหมด\n• echo $PATH -- แสดงค่าตัวแปร PATH\n• export MY_VAR=value -- สร้างตัวแปรใหม่\n\nใน Security: แฮกเกอร์มักแก้ไข PATH เพื่อแทรก Script อันตรายให้รันแทนคำสั่งปกติ"
+      },
+      {
+        "type": "content",
+        "heading": "Pipes, Redirection และ I/O Streams",
+        "text": "Linux มีกลไกการส่งต่อข้อมูลระหว่างคำสั่งที่ทรงพลัง:\n\nI/O Streams:\n• stdin (0) -- ข้อมูลขาเข้า (keyboard)\n• stdout (1) -- ข้อมูลขาออกปกติ\n• stderr (2) -- ข้อมูลข้อผิดพลาด\n\nRedirection:\n• > -- ส่ง stdout ไปเก็บในไฟล์ (ทับของเดิม)\n• >> -- ต่อท้ายไฟล์\n• 2> -- ส่ง stderr ไปไฟล์\n• 2>/dev/null -- ซ่อน error\n\nPipe (|):\n• ส่ง stdout ของคำสั่งแรกเป็น stdin ของคำสั่งถัดไป\n• เช่น: cat /var/log/auth.log | grep 'Failed' | wc -l"
+      },
+      {
+        "type": "content",
+        "heading": "คำสั่งพื้นฐานที่ต้องรู้ (Navigation & Files)",
+        "text": "คำสั่งนำทางและจัดการไฟล์:\n• pwd -- แสดง Path ปัจจุบัน\n• ls -la -- แสดงไฟล์ทั้งหมดรวมถึงที่ซ่อน พร้อมสิทธิ์\n• cd /path -- เปลี่ยน Directory\n• cat file -- แสดงเนื้อหาไฟล์\n• head -n 20 file -- แสดง 20 บรรทัดแรก\n• tail -f /var/log/syslog -- ดู Log แบบ Real-time\n• grep 'pattern' file -- ค้นหาข้อความ\n• find / -name 'file.txt' -- ค้นหาไฟล์\n• cp source dest -- คัดลอก\n• mv source dest -- ย้าย/เปลี่ยนชื่อ\n• rm -rf directory -- ลบโฟลเดอร์ (ระวัง!)\n• man command -- ดู Manual ของคำสั่ง"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "# แสดงไดเรกทอรีปัจจุบัน\npwd\n\n# แสดงรายการไฟล์ (แบบละเอียดและไฟล์ซ่อน)\nls -la\n\n# เปลี่ยนไดเรกทอรี\ncd /home/user/documents\n\n# แสดงเนื้อหาไฟล์\ncat /etc/hostname\n\n# ค้นหาข้อความในไฟล์\ngrep \"error\" /var/log/syslog\n\n# ดู Log แบบ Real-time\ntail -f /var/log/auth.log\n\n# ค้นหาไฟล์ในระบบ\nfind /etc -name '*.conf' -type f"
+      },
+      {
+        "type": "quiz",
+        "question": "คำสั่งใดใช้แสดงรายการไฟล์และโฟลเดอร์ทั้งหมด รวมถึงไฟล์ที่ซ่อน?",
+        "answer": "ls -la",
+        "hint": "Level 1: ใช้คำสั่ง List (ls) พร้อมกับแฟลกที่แสดงไฟล์ทั้งหมด\nLevel 2: แฟลก -a หมายถึง all และ -l หมายถึง long format\nLevel 3: พิมพ์ 'ls -la' เพื่อดูไฟล์ทั้งหมดค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "ถ้าต้องการค้นหาคำว่า 'failed' ในไฟล์ /var/log/auth.log ต้องใช้คำสั่งอะไร?",
+        "answer": "grep \"failed\" /var/log/auth.log",
+        "hint": "Level 1: ใช้เครื่องมือสำหรับการค้นหาข้อความ (Pattern Matching)\nLevel 2: คำสั่งคือ grep ตามด้วยสิ่งที่หา และตามด้วย path ของไฟล์\nLevel 3: พิมพ์ 'grep \"failed\" /var/log/auth.log' ได้เลยค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "filesystem",
+    "title": "File System & Permissions",
+    "icon": "📂",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "โครงสร้าง File System ของ Linux (FHS)",
+        "text": "Linux ใช้โครงสร้างแบบ Tree โดยมี / (root directory) เป็นจุดเริ่มต้นของทุกอย่าง\n\nไดเรกทอรีสำคัญ:\n• /etc -- เก็บไฟล์ Configuration ทั้งหมดของระบบ เช่น /etc/passwd, /etc/ssh/sshd_config\n• /var/log -- เก็บ Log Files ของบริการต่างๆ เช่น auth.log, syslog\n• /tmp -- ไฟล์ชั่วคราวที่ใครก็เขียนได้ (มักถูกใช้เพื่อซ่อนมัลแวร์)\n• /home -- โฮมไดเรกทอรีของผู้ใช้ทั่วไป\n• /root -- โฮมไดเรกทอรีของ root\n• /bin, /usr/bin -- โปรแกรมทั่วไป\n• /sbin, /usr/sbin -- โปรแกรมสำหรับ admin\n• /proc -- ข้อมูล Process แบบ Virtual (อ่านได้แต่ไม่มีจริงในดิสก์)\n• /dev -- Device Files เช่น /dev/null, /dev/sda"
+      },
+      {
+        "type": "content",
+        "heading": "File Permissions (rwx)",
+        "text": "ทุกไฟล์ใน Linux มีระบบ Permission 3 ระดับ (Owner, Group, Others) และ 3 ประเภท (Read=4, Write=2, Execute=1)\n\nอ่านค่า Permission:\n- -rwxr-xr-- แปลว่า: Owner=rwx, Group=r-x, Others=r--\n\nตัวอย่างค่า Octal:\n• 755 (rwxr-xr-x) -- เจ้าของทำได้หมด คนอื่นอ่านและรันได้\n• 644 (rw-r--r--) -- เจ้าของอ่านเขียนได้ คนอื่นอ่านได้อย่างเดียว\n• 600 (rw-------) -- เฉพาะเจ้าของเท่านั้นที่อ่านเขียนได้ (ปลอดภัยสูงสำหรับ SSH Key)\n• 777 (rwxrwxrwx) -- ทุกคนทำได้หมด (อันตราย!)\n\nคำสั่ง:\n• chmod -- เปลี่ยนสิทธิ์ไฟล์\n• chown user:group -- เปลี่ยนเจ้าของ\n• umask -- ตั้งค่า Default Permission สำหรับไฟล์ใหม่"
+      },
+      {
+        "type": "content",
+        "heading": "Special Permissions: SUID, SGID, Sticky Bit",
+        "text": "นอกจาก rwx ยังมี Permission พิเศษที่สำคัญในด้านความปลอดภัย:\n\n• SUID (Set User ID) -- ไฟล์จะรันด้วยสิทธิ์ของเจ้าของไฟล์ แม้คนอื่นจะเป็นผู้รัน เช่น /usr/bin/passwd รันด้วยสิทธิ์ root เพื่อแก้ไข /etc/shadow\n  - ค่า Octal: 4xxx (เช่น 4755)\n  - อันตราย: แฮกเกอร์มักหาไฟล์ SUID เพื่อ Privilege Escalation\n\n• SGID (Set Group ID) -- คล้าย SUID แต่ใช้สิทธิ์ของ Group ค่า Octal: 2xxx\n\n• Sticky Bit -- ใช้กับ Directory ทำให้ลบไฟล์ได้เฉพาะเจ้าของ เช่น /tmp ค่า Octal: 1xxx\n\nค้นหาไฟล์ SUID: find / -perm -4000 -type f 2>/dev/null"
+      },
+      {
+        "type": "content",
+        "heading": "Symlink (Symbolic Link) และ Hardlink",
+        "text": "Link คือวิธีสร้าง 'ทางลัด' ไปยังไฟล์หรือโฟลเดอร์อื่น:\n\n• Symbolic Link (Symlink) -- คล้าย Shortcut ใน Windows ชี้ไปยัง Path ของไฟล์ต้นทาง ถ้าไฟล์ต้นทางถูกลบ Symlink จะพัง\n  - สร้างด้วย: ln -s /path/to/original /path/to/link\n\n• Hardlink -- ชี้ไปยัง Inode เดียวกัน ไฟล์ยังอยู่แม้ต้นทางถูกลบ\n  - สร้างด้วย: ln /path/to/original /path/to/link\n\nในด้าน Security: Symlink Attack คือการหลอกให้โปรแกรม Privileged เขียนไปยังไฟล์ที่ไม่ตั้งใจ"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "# ดูสิทธิ์ของไฟล์\nls -la /etc/passwd\n\n# เปลี่ยนสิทธิ์ไฟล์\nchmod 600 secret.txt\nchmod +x script.sh\n\n# เปลี่ยนเจ้าของ\nchown user:group file.txt\n\n# ค้นหาไฟล์ที่มี SUID bit (รันด้วยสิทธิ์เจ้าของ)\nfind / -perm -4000 -type f 2>/dev/null\n\n# ค้นหาไฟล์ที่ทุกคนเขียนได้ (World-writable)\nfind / -perm -o+w -type f 2>/dev/null\n\n# สร้าง Symlink\nln -s /var/log/syslog ~/syslog_link"
+      },
+      {
+        "type": "quiz",
+        "question": "ถ้าต้องการตั้งค่าให้ไฟล์ secret.txt อ่านและเขียนได้เฉพาะเจ้าของเท่านั้น ต้องใช้คำสั่งอะไร?",
+        "answer": "chmod 600 secret.txt",
+        "hint": "Level 1: ใช้คำสั่ง chmod (Change Mode) ตามด้วยเลขรหัสสิทธิ์\nLevel 2: สิทธิ์อ่านเขียนคือ 4+2=6 ส่วนคนอื่นไม่มีสิทธิ์คือ 0\nLevel 3: ใช้คำสั่ง 'chmod 600 secret.txt' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "ไดเรกทอรีใดเก็บ log files ของระบบ?",
+        "answer": "/var/log",
+        "hint": "Level 1: อยู่ภายใต้ไดเรกทอรี /var\nLevel 2: ชื่อไดเรกทอรีแปลว่า 'บันทึก'\nLevel 3: คำตอบคือ /var/log ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "users",
+    "title": "Users, Groups & Processes",
+    "icon": "🤝",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Users & Superusers",
+        "text": "• root (UID 0) -- ผู้ใช้งานที่มีสิทธิ์สูงสุดในระบบ สามารถทำทุกอย่างได้\n• System Users -- ใช้รันบริการ เช่น www-data สำหรับเว็บเซิร์ฟเวอร์, daemon, nobody\n• Regular Users -- ผู้ใช้ทั่วไป มี UID ตั้งแต่ 1000 ขึ้นไป\n\nไฟล์ข้อมูลผู้ใช้:\n• /etc/passwd -- เก็บข้อมูลผู้ใช้ทุกคน (username:x:UID:GID:info:home:shell)\n• /etc/shadow -- เก็บ Password Hash (อ่านได้เฉพาะ root เท่านั้น)\n• /etc/group -- เก็บข้อมูล Group\n\n• sudo -- คำสั่งที่ให้ User ธรรมดาทำงานในสิทธิ์ root ชั่วคราว\n• /etc/sudoers -- กำหนดว่าใครใช้ sudo ได้บ้าง"
+      },
+      {
+        "type": "content",
+        "heading": "โครงสร้างของ /etc/passwd",
+        "text": "/etc/passwd เก็บข้อมูลผู้ใช้ทุกคน แต่ละบรรทัดคือ 1 ผู้ใช้ แบ่งด้วย : (colon)\n\nรูปแบบ: username:x:UID:GID:comment:home_dir:shell\n\nตัวอย่าง:\nroot:x:0:0:root:/root:/bin/bash\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\njohn:x:1001:1001:John Doe:/home/john:/bin/bash\n\n• x ในช่องที่ 2 หมายถึงรหัสผ่านเก็บใน /etc/shadow\n• UID 0 = root\n• shell เป็น /usr/sbin/nologin หรือ /bin/false หมายถึง login ไม่ได้"
+      },
+      {
+        "type": "content",
+        "heading": "Process Management",
+        "text": "การตรวจสอบ Process ช่วยให้ตรวจจับมัลแวร์ได้ ทุกโปรแกรมที่รันจะมี PID (Process ID) ไม่ซ้ำกัน\n\nคำสั่งที่ใช้:\n• ps aux -- ดู Process ทั้งหมดในระบบ\n• ps -ef -- ดู Process พร้อม Parent Process (PPID)\n• top / htop -- ดู Process แบบเรียลไทม์ใช้ CPU/Memory\n• pgrep nginx -- หา PID ของโปรแกรม nginx\n• kill PID -- ส่ง SIGTERM (จบโปรแกรมสุภาพ)\n• kill -9 PID -- ส่ง SIGKILL (บังคับหยุดทันที)\n• netstat -tulnp -- ดูว่า Process ไหนเปิด Port อะไรอยู่\n• ss -tulnp -- คำสั่งใหม่แทน netstat\n• lsof -i :80 -- ดูว่าโปรแกรมใดใช้พอร์ต 80"
+      },
+      {
+        "type": "content",
+        "heading": "การตรวจสอบ User Sessions",
+        "text": "คำสั่งตรวจสอบว่ามีใคร Login อยู่บ้าง:\n• who -- แสดง User ที่ Login อยู่ในขณะนี้\n• w -- แสดง User ที่ Login พร้อมกิจกรรมที่ทำอยู่\n• last -- แสดงประวัติการ Login ย้อนหลัง (อ่านจาก /var/log/wtmp)\n• lastb -- แสดงการ Login ที่ล้มเหลว (อ่านจาก /var/log/btmp)\n• id -- แสดง UID, GID และ Group ของ User ปัจจุบัน\n• whoami -- แสดงชื่อ User ปัจจุบัน\n\nในงาน Incident Response:\n• last | head -20 -- ดูประวัติ Login ล่าสุด\n• grep 'Failed' /var/log/auth.log -- ดูการ Login ล้มเหลว"
+      },
+      {
+        "type": "content",
+        "heading": "Cron Jobs: งานอัตโนมัติที่ซ่อนอันตราย",
+        "text": "Cron คือ Task Scheduler ของ Linux ที่รันคำสั่งตามเวลาที่กำหนด\n\nตำแหน่ง Crontab:\n• /etc/crontab -- Crontab ระดับระบบ\n• /var/spool/cron/crontabs/ -- Crontab รายบุคคล\n• /etc/cron.d/ -- Crontab ของแต่ละแอปพลิเคชัน\n\nรูปแบบ: นาที ชั่วโมง วัน เดือน วันในสัปดาห์ คำสั่ง\nตัวอย่าง: */5 * * * * /bin/backup.sh  (ทุก 5 นาที)\n\nคำสั่ง:\n• crontab -l -- ดู Crontab ของตัวเอง\n• crontab -e -- แก้ไข Crontab\n• crontab -l -u root -- ดู Crontab ของ root\n\nด้านความปลอดภัย: มัลแวร์มักฝัง Cron Job เพื่อคงการเข้าถึง (Persistence)"
+      },
+      {
+        "type": "quiz",
+        "question": "คำสั่งใดใช้ดูว่า user ปัจจุบันอยู่ใน group ใดบ้าง?",
+        "answer": "id",
+        "hint": "Level 1: เป็นคำสั่งสั้นๆ 2 ตัวอักษรที่หมายถึง Identity\nLevel 2: พิมพ์ตัว i แล้วตามด้วย d\nLevel 3: พิมพ์ 'id' ได้เลยค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "ไฟล์ใดเก็บ password hash ของ user ทั้งหมดในระบบ?",
+        "answer": "/etc/shadow",
+        "hint": "Level 1: อยู่ใน /etc และเกี่ยวกับ 'เงา'\nLevel 2: ชื่อไฟล์คือ shadow\nLevel 3: คำตอบคือ /etc/shadow ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "scripting",
+    "title": "Shell Scripting สำหรับ Security",
+    "icon": "📜",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "ทำไมต้องเรียน Shell Scripting?",
+        "text": "Shell Scripting ช่วยให้ Automate งาน Security ได้ เช่น การสแกน Log หา Failed Login อัตโนมัติ หรือกวาดหาไฟล์ที่มีสิทธิ์อันตรายในระบบ\n\nพื้นฐานที่ต้องรู้:\n• Shebang (#!/bin/bash) -- บอกระบบว่าให้ใช้ bash รัน Script\n• Variables -- เก็บค่า เช่น NAME=\"John\"\n• If-else -- ตรวจสอบเงื่อนไข\n• Loops (for, while) -- วนซ้ำ\n• Functions -- แยกโค้ดเป็นก้อน\n\nการรัน Script:\n• ต้องให้สิทธิ์ก่อน: chmod +x script.sh\n• รัน: ./script.sh หรือ bash script.sh"
+      },
+      {
+        "type": "content",
+        "heading": "ตัวแปรและ Control Flow ใน Bash",
+        "text": "ตัวแปร:\n• NAME=\"Hello\" (ไม่มีช่องว่างรอบ =)\n• echo $NAME -- ใช้งานตัวแปร\n• readonly VAR=value -- ตัวแปรแบบแก้ไขไม่ได้\n\nIf-else:\nif [ condition ]; then\n  commands\nelif [ condition ]; then\n  commands\nelse\n  commands\nfi\n\nFor Loop:\nfor i in 1 2 3 4 5; do\n  echo \"Number: $i\"\ndone\n\nFor Loop วนใน Array:\nIPS=(\"192.168.1.1\" \"10.0.0.1\")\nfor ip in \"${IPS[@]}\"; do\n  ping -c 1 $ip\ndone\n\nWhile Loop:\nwhile read line; do\n  echo $line\ndone < /var/log/auth.log"
+      },
+      {
+        "type": "content",
+        "heading": "เครื่องมือประมวลผลข้อความ: grep, awk, sed",
+        "text": "สามเครื่องมือนี้ใช้บ่อยมากในการ Parse Log:\n\n• grep -- ค้นหาข้อความตามรูปแบบ\n  grep 'Failed' /var/log/auth.log\n  grep -E 'Failed|Invalid' file  (ค้นหา 2 คำ)\n  grep -v 'root' file  (exclude)\n  grep -c 'pattern' file  (นับจำนวน)\n\n• awk -- ประมวลผลข้อมูลแบบคอลัมน์\n  awk '{print $1}' file  (พิมพ์คอลัมน์ 1)\n  awk -F: '{print $1}' /etc/passwd  (แยกด้วย :)\n  awk '/Failed/{print $11}' auth.log  (IP ของ Failed Login)\n\n• sed -- แก้ไขข้อความ (Stream Editor)\n  sed 's/old/new/g' file  (แทนที่ทุกคำ)\n  sed '/pattern/d' file  (ลบบรรทัดที่มี pattern)\n  sed -n '1,10p' file  (แสดงบรรทัด 1-10)"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "#!/bin/bash\n# สคริปต์ตรวจหาคนแอบเจาะระบบ (Failed Logins)\necho \"[*] Scanning for failed candidates...\"\ngrep \"Failed password\" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -rn\n\n# สคริปต์หาไฟล์ที่มี SUID bit\necho \"[*] Scanning for SUID files...\"\nfind / -perm -4000 -type f 2>/dev/null\n\n# สคริปต์เช็ค Process ที่เปิด Port\necho \"[*] Open ports and processes:\"\nss -tulnp | grep LISTEN"
+      },
+      {
+        "type": "quiz",
+        "question": "ในบรรทัดแรกของ shell script ต้องเขียนอะไรเพื่อระบุว่าใช้ bash?",
+        "answer": "#!/bin/bash",
+        "hint": "Level 1: เรียกว่า shebang เริ่มต้นด้วยเครื่องหมาย #!\nLevel 2: ตามด้วย path เต็มของ bash คือ /bin/bash\nLevel 3: พิมพ์ว่า '#!/bin/bash' ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "คำสั่งใดใช้ค้นหาไฟล์ที่มี SUID bit ตั้งค่าอยู่?",
+        "answer": "find / -perm -4000 -type f",
+        "hint": "Level 1: ใช้เครื่องมือ find พร้อมกับเงื่อนไขสิทธิ์การอนุญาต (-perm)\nLevel 2: SUID มีค่า Octal คือ 4000\nLevel 3: ใช้คำสั่ง 'find / -perm -4000 -type f' ค่ะ"
+      }
+    ]
+  }
+]

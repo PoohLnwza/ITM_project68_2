@@ -1,0 +1,10 @@
+ollama
+psycopg2-binary
+fastapi
+uvicorn
+pydantic
+sentence-transformers
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt==4.0.1
+python-multipart

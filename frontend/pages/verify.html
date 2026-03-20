@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ยืนยันอีเมล — Cyberpark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <style>
+      .verify-card {
+        background: var(--surface-2);
+        backdrop-filter: blur(18px);
+        border: 2px solid var(--pink);
+        border-radius: 2px;
+        padding: 48px 40px;
+        max-width: 440px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 0 15px var(--pink-glow);
+      }
+
+      .v-logo {
+        font-family: var(--font-display);
+font-size: var(--text-xs);
+        color: var(--pink);
+        letter-spacing: 1px;
+        margin-bottom: 6px;
+        line-height: var(--leading-loose);
+        text-shadow:
+          0 0 8px var(--pink-glow),
+          2px 2px 0 rgba(139, 68, 204, 0.7);
+      }
+
+      .v-sub {
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-bottom: 36px;
+        line-height: var(--leading-loose);
+      }
+
+      .v-icon {
+        font-size: var(--text-2xl);
+        margin-bottom: 18px;
+      }
+
+      .status-text {
+        font-family: var(--font-display);
+font-size: var(--text-xs);
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+        color: var(--text);
+        line-height: var(--leading-loose);
+      }
+
+      .status-detail {
+        font-family: var(--font-primary);
+font-size: var(--text-sm);
+        color: var(--text-dim);
+        line-height: var(--leading-loose);
+        margin-bottom: 28px;
+      }
+
+      .v-btn {
+        display: inline-block;
+        padding: 10px 24px;
+        background: transparent;
+        border: 1px solid var(--pink);
+        color: var(--pink);
+        font-family: var(--font-display);
+font-size: var(--text-2xs);
+        letter-spacing: 1px;
+        text-decoration: none;
+        border-radius: 2px;
+        transition: all 0.1s;
+        text-shadow: 0 0 5px var(--pink-glow);
+      }
+
+      .v-btn:hover {
+        background: var(--pink);
+        color: var(--bg);
+        box-shadow: 2px 2px 0 var(--pink-glow);
+      }
+
+      .error .status-text {
+        color: #ff5f57;
+      }
+
+      .success .status-text {
+        color: #20d4dd;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading .v-icon {
+        animation: spin 1.2s linear infinite;
+        display: inline-block;
+      }
+    </style>
+    <link rel="icon" type="image/png" href="../assets/images/bot-avatar.png" />
+</head>
+
+  <body>
+    <div class="app-wrapper">
+      <div class="verify-card" id="card">
+        <div class="v-logo">CYBERPARK</div>
+        <div class="v-sub">CYBERSECURITY TRAINING SYS</div>
+        <div class="v-icon" id="icon">⏳</div>
+        <div class="status-text" id="status-text">AUTHORIZING AGENT...</div>
+        <div class="status-detail" id="status-detail">ระบบกำลังตรวจสอบสิทธิ์และเชื่อมโยงบัญชี...</div>
+      </div>
+    </div>
+
+    <script>
+      let API = window.location.origin;
+      if (API.includes('file://') || window.location.port === '5500' || window.location.port === '3000') {
+        API = 'http://localhost:8000';
+      }
+      async function verifyToken() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+        if (!token) {
+          showError('INVALID LINK', 'ลิงก์ยืนยันไม่สมบูรณ์ โปรดคัดลอกลิงก์จากอีเมลมาวางทั้งหมด');
+          return;
+        }
+        try {
+          const res = await fetch(
+            `${API}/api/auth/verify?token=${encodeURIComponent(token)}`,
+          );
+          const data = await res.json();
+          if (res.ok) showSuccess();
+          else
+            showError(
+              'VERIFY FAILED',
+              data.detail || 'ลิงก์ยืนยันไม่ถูกต้องหรือหมดอายุการใช้งานไปแล้ว',
+            );
+        } catch {
+          showError('ERROR', 'ขาดการเชื่อมต่อกับเซิร์ฟเวอร์ โปรดตรวจสอบสัญญาณเครือข่ายแล้วลองใหม่');
+        }
+      }
+      function showSuccess() {
+        document.getElementById('icon').textContent = '✅';
+        document.getElementById('status-text').textContent = 'CLEARANCE GRANTED!';
+        document.getElementById('status-detail').innerHTML =
+          'บัญชีสายลับของคุณได้รับการยืนยันแล้ว<br>คุณสามารถเข้าสู่ระบบเพื่อเริ่มปฏิบัติการได้ทันที';
+        document.getElementById('card').classList.add('success');
+        appendButton('../index.html', '> ACCESS SYSTEM');
+      }
+      function showError(title, detail) {
+        document.getElementById('icon').textContent = '✖';
+        document.getElementById('status-text').textContent = title;
+        document.getElementById('status-detail').textContent = detail;
+        document.getElementById('card').classList.add('error');
+        appendButton('../index.html', '> RETURN TO BASE');
+      }
+      function appendButton(href, label) {
+        const a = document.createElement('a');
+        a.href = href;
+        a.className = 'v-btn';
+        a.textContent = label;
+        document.getElementById('card').appendChild(a);
+      }
+      verifyToken();
+    </script>
+  </body>
+</html>

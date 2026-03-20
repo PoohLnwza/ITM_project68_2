@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Mail — Cyberpark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/modules.css" />
+  <link rel="stylesheet" href="../components/chatbot/chatbot.css" />
+  <link rel="stylesheet" href="../components/terminal/terminal.css" />
+  <style>
+    .diagram-container {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .diagram-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .diagram-caption {
+      font-family: var(--font-primary);
+font-size: var(--text-xs);
+      color: var(--text-dim);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .packet-dump {
+      background: var(--surface-2);
+      border: 1px solid rgba(59, 130, 246, .15);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .packet-dump-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--surface-2);
+      border-bottom: 1px solid rgba(59, 130, 246, .12);
+    }
+
+    .packet-dump-header .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .packet-dump-header .dot.red {
+      background: #ff5f57;
+    }
+
+    .packet-dump-header .dot.yel {
+      background: #ffbd2e;
+    }
+
+    .packet-dump-header .dot.grn {
+      background: var(--green);
+    }
+
+    .packet-dump-header .label {
+      font-family: var(--font-primary);
+font-size: var(--text-xs);
+      color: var(--text-dim);
+      margin-left: auto;
+    }
+
+    .packet-dump-body {
+      padding: 16px;
+      overflow-x: auto;
+    }
+
+    .packet-dump-body pre {
+      font-family: 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      margin: 0;
+      white-space: pre;
+    }
+
+    .pkt-offset {
+      color: #555;
+    }
+
+    .pkt-eth {
+      color: #5f87ff;
+    }
+
+    .pkt-ip {
+      color: #ffbd2e;
+    }
+
+    .pkt-tcp {
+      color: #00e676;
+    }
+
+    .pkt-data {
+      color: #e8e8e8;
+    }
+
+    .pkt-label {
+      color: #777;
+      font-style: italic;
+    }
+
+    .ascii-diagram {
+      background: var(--surface-2);
+      border: 1px solid rgba(59, 130, 246, .12);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 8px;
+    }
+
+    .ascii-diagram pre {
+      font-family: 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      color: var(--blue);
+      text-align: center;
+      margin: 0;
+    }
+  </style>
+  <link rel="icon" type="image/png" href="../assets/images/bot-avatar.png" />
+</head>
+
+<body>
+
+  <div class="app-wrapper">
+    <div class="app-container">
+      <div class="module-page-wrapper">
+
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+        <aside class="module-sidebar" id="moduleSidebar">
+          <div class="sidebar-header">
+            <a href="nontechnical.html">
+              <button class="back-btn">&#x3C; RETURN BASE</button>
+            </a>
+            <h2>PHISHING MAIL</h2>
+          </div>
+          <ul class="module-list" id="sidebarList"></ul>
+        </aside>
+
+        <main class="module-content">
+          <div class="content-header">
+            <p class="content-breadcrumb">
+              <a href="../index.html">Cyberpark</a> ▸
+              <a href="nontechnical.html">Non-Technical Path</a> ▸ Phishing Mail
+            </p>
+            <h1 id="contentTitle">Loading...</h1>
+            <button class="terminal-page-btn" id="terminalPageBtn">$ TERMINAL</button>
+          </div>
+          <div id="contentArea"></div>
+        </main>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/modules/phishing.js"></script>
+  <script src="../components/chatbot/chatbot.js"></script>
+  <script>window.AUTH_MODE = 'guard';</script>
+  <script src="../js/auth.js"></script>
+  <script src="../components/terminal/terminal.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('moduleSidebar').classList.toggle('open');
+    });
+  </script>
+</body>
+
+</html>

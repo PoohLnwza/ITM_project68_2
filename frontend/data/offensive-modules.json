@@ -1,0 +1,208 @@
+[
+  {
+    "id": "penetration-testing-intro",
+    "title": "Intro to Pentesting",
+    "icon": "⚔️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Penetration Testing คืออะไร?",
+        "text": "Penetration Testing (Pen Test) หรือการทดสอบเจาะระบบ คือการจำลองการโจมตีทางไซเบอร์ไปยังระบบคอมพิวเตอร์ เครือข่าย หรือแอปพลิเคชัน เพื่อค้นหาช่องโหว่ (Vulnerability) และประเมินความเสี่ยงที่แฮกเกอร์อาจสามารถใช้ประโยชน์ได้ โดยมีเป้าหมายเพื่อเสริมสร้างความปลอดภัยให้แข็งแกร่งขึ้น (Ethical Hacking)"
+      },
+      {
+        "type": "content",
+        "heading": "ประเภทของ Penetration Testing",
+        "text": "แบ่งตาม Scope และข้อมูลที่ได้รับ:\n\n• Black Box: ไม่ได้ข้อมูลระบบเลย จำลองการโจมตีจากคนนอกจริงๆ\n• White Box: ได้รับ Source Code, Network Diagram, Credentials ครบ\n• Grey Box: ได้บางอย่าง เช่น Username แต่ไม่มี Code\n\nแบ่งตามเป้าหมาย:\n• Network Pentest: เครือข่าย Firewall Router\n• Web Application Pentest: ช่องโหว่เว็บ (OWASP Top 10)\n• Mobile Pentest: App บน iOS/Android\n• Social Engineering: ทดสอบความตระหนักของพนักงาน\n• Physical Pentest: ทดสอบการเข้าถึงอาคาร\n• Red Team: จำลองการโจมตีเต็มรูปแบบ (คน+เทคโนโลยี+กายภาพ)"
+      },
+      {
+        "type": "content",
+        "heading": "ความแตกต่างระหว่าง Vulnerability Scan และ Pen Test",
+        "text": "Vulnerability Scan:\n• ใช้เครื่องมืออัตโนมัติ (Nessus, OpenVAS, Qualys)\n• สแกนหาช่องโหว่ที่รู้จัก (CVE Database)\n• เร็ว ครอบคลุมกว้าง แต่มี False Positive สูง\n• ไม่พิสูจน์ว่า Exploit ได้จริง\n\nPenetration Test:\n• ใช้ทักษะของมนุษย์ในการเจาะจริง\n• พิสูจน์ว่าช่องโหว่ใช้งานได้จริง (Exploitable)\n• ประเมินความเสียหายที่อาจเกิดขึ้น\n• ครอบคลุมช่องโหว่ใหม่ที่ Database ยังไม่รู้จัก\n\nBug Bounty:\n• Crowdsource Security Testing ผ่าน Platform เช่น HackerOne, Bugcrowd\n• จ่ายเงินรางวัลตามความรุนแรงของ Bug ที่ค้นพบ"
+      },
+      {
+        "type": "content",
+        "heading": "ขั้นตอนการทำ Penetration Testing (Pentest Phases)",
+        "text": "1. Planning & Scoping:\n• กำหนด Rules of Engagement (ROE)\n• ระบุ Scope (IP, Domain, Application)\n• ได้รับ Written Permission\n\n2. Reconnaissance (การรวบรวมข้อมูล):\n• Passive Recon: เก็บข้อมูลโดยไม่แตะ Target (OSINT, WHOIS, Shodan)\n• Active Recon: ส่ง Traffic ไปหา Target (Port Scan, Banner Grabbing)\n\n3. Scanning & Enumeration:\n• Nmap สแกนหาพอร์ต บริการ OS\n• Enumerate Services (SMB, SNMP, DNS Zone Transfer)\n\n4. Vulnerability Assessment:\n• เทียบกับ CVE, CVSS Score\n• ระบุ Exploitable Vulnerabilities\n\n5. Exploitation:\n• ใช้ Metasploit หรือ Manual Exploit\n• เข้าถึงระบบเป้าหมาย\n\n6. Post-Exploitation:\n• Privilege Escalation: ยกระดับสิทธิ์\n• Lateral Movement: ขยายไปยังเครื่องอื่น\n• Persistence: ฝัง Backdoor\n\n7. Reporting:\n• Executive Summary สำหรับผู้บริหาร\n• Technical Report สำหรับทีม Dev/Security\n• Remediation Recommendations"
+      },
+      {
+        "type": "content",
+        "heading": "OSINT: การรวบรวมข้อมูลจากแหล่งสาธารณะ",
+        "text": "OSINT (Open Source Intelligence) คือการรวบรวมข้อมูลเป้าหมายจากแหล่งสาธารณะโดยไม่แตะระบบโดยตรง\n\nเครื่องมือและแหล่งข้อมูล:\n• WHOIS: ข้อมูลเจ้าของ Domain, IP Range\n• Shodan.io: Search Engine สำหรับ IoT/Server ที่เปิดบน Internet\n• Censys.io: คล้าย Shodan\n• Google Dorking: ค้นหาข้อมูลลับผ่าน Google เช่น site:target.com filetype:pdf\n• LinkedIn: ชื่อพนักงาน ตำแหน่ง เทคโนโลยีที่ใช้\n• theHarvester: รวบรวม Email, Subdomain จาก OSINT\n• Maltego: Visualize ความสัมพันธ์ของ OSINT\n\nตัวอย่าง Google Dorks:\n• site:target.com ext:pdf -- ไฟล์ PDF ของ Target\n• intitle:\"index of\" site:target.com -- Directory Listing\n• inurl:/admin site:target.com -- หน้า Admin Panel"
+      },
+      {
+        "type": "quiz",
+        "question": "ขั้นตอนการจำลองการโจมตีเพื่อค้นหาช่องโหว่ระบบอย่างถูกกฎหมาย เรียกว่าอะไร?",
+        "answer": "penetration testing",
+        "hint": "Level 1: เป็นคำศัพท์ภาษาอังกฤษที่แปลตรงตัวว่า 'การทดสอบการเจาะ'\nLevel 2: คำขึ้นต้นคือ Penetration และตามด้วยคำว่า Testing\nLevel 3: พิมพ์ว่า 'penetration testing' ได้เลยค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "owasp-sqli",
+    "title": "SQL Injection (SQLi)",
+    "icon": "💉",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "SQL Injection คืออะไร?",
+        "text": "SQL Injection คือการโจมตีที่ใส่คำสั่ง SQL อันตรายเข้าไปในช่อง Input ของแอปพลิเคชัน ทำให้สามารถข้ามการตรวจสอบรหัสผ่าน อ่านข้อมูลลับ ปรับปรุงข้อมูล หรือแม้แต่ลบฐานข้อมูลทิ้งได้ มักเกิดจากการต่อสตริง SQL โดยตรงโดยไม่ใช้ Prepared Statements"
+      },
+      {
+        "type": "content",
+        "heading": "ประเภทของ SQL Injection",
+        "text": "1. In-band SQLi (ง่ายสุด):\n• Error-based: ข้อมูลรั่วออกมาผ่าน Error Message\n• Union-based: ใช้ UNION SELECT ดึงข้อมูลจากตารางอื่น\n\n2. Inferential SQLi (Blind SQLi):\n• Boolean-based: ถามคำถาม True/False และสังเกตผลลัพธ์ (เช่น หน้าแสดงผลต่างกัน)\n• Time-based: ใช้ SLEEP() หรือ WAITFOR DELAY เพื่อตรวจสอบ\n\n3. Out-of-band SQLi:\n• ใช้ DNS หรือ HTTP Callback ส่งข้อมูลออกไป\n• ต้องการ Feature พิเศษของ DB เช่น xp_cmdshell (MSSQL)\n\nระดับความรุนแรง: OWASP จัด SQLi อยู่ใน Top 10 มาตลอด เพราะสามารถสร้างความเสียหายได้มหาศาล"
+      },
+      {
+        "type": "content",
+        "heading": "ตัวอย่างการโจมตีแบบ bypass login",
+        "text": "ถ้าช่องกรอก Username ส่งค่าตรงไปยังฐานข้อมูลแบบนี้:\n`SELECT * FROM users WHERE username = '$user' AND password = '$password'`\n\nถ้าผู้โจมตีป้อน `admin' OR 1=1 --` ในช่อง username คำสั่ง SQL จะกลายเป็น:\n`SELECT * FROM users WHERE username = 'admin' OR 1=1 --' AND password = '...'`\n\n• `--` คอมเมนต์คำสั่งตรวจสอบพาสเวิร์ดทิ้ง\n• `OR 1=1` ทำให้เงื่อนไขเป็นจริงเสมอ\n• ผล: Login สำเร็จโดยไม่ต้องรู้รหัสผ่าน"
+      },
+      {
+        "type": "content",
+        "heading": "การป้องกัน SQL Injection",
+        "text": "วิธีป้องกัน SQLi ที่ถูกต้อง:\n\n1. Prepared Statements / Parameterized Queries (วิธีที่ดีที่สุด):\n• แยก SQL Structure ออกจาก Data อย่างเด็ดขาด\n• PHP: $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?'); $stmt->execute([$id]);\n• Python: cursor.execute('SELECT * FROM users WHERE id = %s', (user_id,))\n\n2. Stored Procedures: เรียก SP แทนการ Build SQL String\n\n3. Input Validation: ตรวจสอบรูปแบบ Input (Allowlist)\n\n4. Least Privilege: DB User ควรมีสิทธิ์เฉพาะที่จำเป็น ไม่ใช้ root/sa\n\n5. Web Application Firewall (WAF): กรอง Payload อันตราย\n\n6. Error Handling: ไม่แสดง DB Error ให้ผู้ใช้เห็น (อาจรั่วข้อมูล)"
+      },
+      {
+        "type": "sql_simulator",
+        "question": "นำ Flag ที่ได้จากการโจมตี SQL Injection ในแบบจำลองมาตอบเพื่อผ่านด่าน",
+        "answer": "FLAG_SQL1_M4ST3R",
+        "hint": "Level 1: ลองใช้เทคนิค Bypass Login ที่พบบ่อยที่สุด\nLevel 2: ใส่เครื่องหมาย Single Quote (') เพื่อปิดสตริงเดิม แล้วตามด้วย `OR 1=1 --` เพื่อทำให้เงื่อนไขเป็นจริงเสมอ\nLevel 3: ป้อนคำว่า `admin' OR 1=1 --` ในช่อง Username ของ Simulator แล้วกด Login เพื่อรับ Flag ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "owasp-idor",
+    "title": "Broken Access Control (IDOR)",
+    "icon": "🔑",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "IDOR (Insecure Direct Object Reference) คืออะไร?",
+        "text": "IDOR เป็นส่วนหนึ่งของ Broken Access Control เกิดจากการที่แอปพลิเคชันเปิดให้เข้าถึงไฟล์หรือข้อมูลในฐานข้อมูลทางตรงได้โดยไม่มีการตรวจสอบสิทธิ์ (Authorization) ว่าผู้ใช้นั้นมีสิทธิ์เข้าถึงข้อมูลของคนอื่นหรือไม่ แม้จะล็อกอินมาถูกต้องแล้วก็ตาม"
+      },
+      {
+        "type": "content",
+        "heading": "ความเสี่ยงของ IDOR และตัวอย่างในชีวิตจริง",
+        "text": "ผู้โจมตีสามารถ:\n• อ่านข้อมูลส่วนตัวของลูกค้ารายอื่น (PII Leak)\n• แก้ไขหรือลบข้อมูลของคนอื่น\n• เข้าถึงฟังก์ชัน Admin โดยการเปลี่ยน role=admin ใน Request\n\nตัวอย่าง URL ที่มีช่องโหว่:\n• /invoice?id=1001 → ลองเปลี่ยนเป็น /invoice?id=1002, 1003...\n• /profile?user_id=50 → ลองเปลี่ยนเป็น user_id=1 (Admin)\n• /api/users/50/profile → เปลี่ยนเป็น /api/users/1/profile\n\nกรณีจริง: Facebook เคยมีช่องโหว่ IDOR ที่ทำให้ดู Photo ของ Private Profile ได้\n\nการป้องกัน:\n• ตรวจสอบ Authorization ทุกครั้งก่อน Return Data\n• ใช้ UUID แทน Sequential ID\n• ไม่เปิดเผย Internal ID โดยตรงใน URL\n• ตรวจสอบ Object Ownership (เจ้าของข้อมูลตรงกับผู้ขอหรือไม่)"
+      },
+      {
+        "type": "idor_simulator",
+        "question": "นำ Flag ที่ได้จากการโจมตี IDOR ในแบบจำลองมาตอบเพื่อผ่านด่าน",
+        "answer": "FLAG_1D0R_H4CK3R",
+        "hint": "Level 1: ลองสังเกตพารามิเตอร์ใน URL ของโปรไฟล์\nLevel 2: ระบบส่วนใหญ่มักจะใช้ ID เลข 1 สำหรับผู้ดูแลระบบ (Admin)\nLevel 3: แก้ไขเลข ID ใน URL Simulator จาก 1050 เป็นเลข 1 แล้วกด Enter เพื่อดูข้อมูลของ Admin ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "owasp-cmd",
+    "title": "Command Injection",
+    "icon": "[*]",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Command Injection คืออะไร?",
+        "text": "ช่องโหว่นี้เกิดขึ้นเมื่อแอปพลิเคชันนำข้อมูล Input จากผู้ใช้ส่งตรงไปทำงานในระดับ Shell (Command Line) ของระบบปฏิบัติการโดยไม่มีการกรอง ทำให้ผู้โจมตีสามารถแทรกคำสั่งอันตรายเข้าไปทำงานบนเซิร์ฟเวอร์ได้โดยตรง"
+      },
+      {
+        "type": "content",
+        "heading": "เครื่องหมายที่ใช้แทรกคำสั่ง (Command Chaining)",
+        "text": "เครื่องหมายที่ใช้รันคำสั่งพิเศษ:\n• `;` (Semicolon): รันคำสั่งต่อไปเสมอ ไม่สนว่าคำสั่งแรกสำเร็จหรือไม่\n• `&&` (AND): รันคำสั่งต่อไปเฉพาะเมื่อคำสั่งแรกสำเร็จ\n• `||` (OR): รันคำสั่งต่อไปเฉพาะเมื่อคำสั่งแรก fail\n• `|` (Pipe): ส่ง Output คำสั่งแรกเป็น Input ของคำสั่งถัดไป\n• `` `cmd` `` หรือ `$(cmd)`: Command Substitution รันคำสั่งแล้วแทรก Output\n• `\\n` (Newline): บางระบบรันคำสั่งใหม่เมื่อขึ้นบรรทัดใหม่\n\nตัวอย่างการโจมตี:\nInput: 127.0.0.1; cat /etc/passwd\nผล: ping 127.0.0.1 แล้วรัน cat /etc/passwd ต่อ"
+      },
+      {
+        "type": "content",
+        "heading": "การป้องกัน Command Injection",
+        "text": "วิธีป้องกันที่ถูกต้อง:\n\n1. หลีกเลี่ยงการเรียก Shell โดยตรง:\n• Python: ใช้ subprocess.run(['ping', ip]) แทน os.system('ping ' + ip)\n• พาส argument เป็น list ไม่ใช่ string\n\n2. Input Validation - Allowlist:\n• ตรวจสอบว่า Input เป็น IP จริงๆ ด้วย Regex\n• ยอมรับเฉพาะตัวเลขและ . สำหรับ IP\n\n3. Escape Characters:\n• Escape ตัวอักษรพิเศษก่อนส่งเข้า Shell\n• PHP: escapeshellarg(), escapeshellcmd()\n\n4. Least Privilege:\n• Web Server ไม่ควรรันด้วยสิทธิ์ root\n• ถ้าถูก Exploit ความเสียหายจะจำกัดอยู่ที่สิทธิ์ของ Web User"
+      },
+      {
+        "type": "cmd_simulator",
+        "question": "นำ Flag ที่ได้จากการแทรกคำสั่งเพื่อดูไฟล์ flag.txt (cat flag.txt) มาตอบเพื่อผ่านด่าน",
+        "answer": "FLAG_CMD_1NJ3CT10N",
+        "hint": "Level 1: ใช้เครื่องหมาย `;` เพื่อรันคำสั่งอื่นต่อจากคำสั่งเดิม\nLevel 2: ในระบบ Linux คำสั่งที่ใช้ดูเนื้อหาในไฟล์คือ `cat` ตามด้วยชื่อไฟล์\nLevel 3: ลองป้อน `127.0.0.1; cat flag.txt` ในช่อง Ping เพื่อดึงข้อมูลออกมาค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "owasp-sde",
+    "title": "Sensitive Data Exposure",
+    "icon": "👁️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Sensitive Data Exposure คืออะไร?",
+        "text": "OWASP เรียกว่า Cryptographic Failures เกิดจากการเปิดเผยข้อมูลสำคัญ เช่น:\n• ไม่เข้ารหัสรหัสผ่าน (Plaintext หรือ MD5)\n• ทิ้ง Comment ลับไว้ในหน้าเว็บ (HTML Comments)\n• ตั้งค่า Server ผิดพลาดให้คนนอกเข้าถึงไฟล์ Config\n• ใช้ HTTP แทน HTTPS ทำให้ข้อมูลผ่านเน็ตแบบไม่เข้ารหัส\n• เก็บข้อมูลลับไว้ใน Client-side Storage (localStorage)"
+      },
+      {
+        "type": "content",
+        "heading": "HTTP vs HTTPS และ TLS/SSL",
+        "text": "HTTP (Hypertext Transfer Protocol):\n• ข้อมูลส่งเป็น Plaintext ไม่มีการเข้ารหัส\n• ใครก็ดักอ่านได้ด้วย Wireshark หรือ MitM\n• พอร์ต 80\n\nHTTPS (HTTP Secure):\n• ข้อมูลถูกเข้ารหัสด้วย TLS (Transport Layer Security)\n• พอร์ต 443\n• ต้องมี SSL/TLS Certificate จาก Certificate Authority (CA)\n\nTLS Handshake:\n1. Client ส่ง ClientHello (Cipher Suites ที่รองรับ)\n2. Server ส่ง Certificate และเลือก Cipher Suite\n3. ตกลง Session Key\n4. ส่งข้อมูลเข้ารหัสได้\n\nSecurity Headers:\n• HSTS: บังคับใช้ HTTPS เสมอ\n• Content-Security-Policy: ป้องกัน XSS\n• X-Frame-Options: ป้องกัน Clickjacking"
+      },
+      {
+        "type": "content",
+        "heading": "การจัดเก็บรหัสผ่านที่ปลอดภัย",
+        "text": "รหัสผ่านไม่ควรเก็บเป็น Plaintext หรือ Hash ง่ายๆ อย่าง MD5/SHA1\n\nอัลกอริธึม Hashing ที่ถูกต้อง:\n• bcrypt: ช้าโดยเจตนา ปรับ Cost Factor ได้\n• Argon2: ชนะ Password Hashing Competition ปี 2015\n• scrypt: ใช้ Memory มากป้องกัน GPU Attack\n• PBKDF2: มาตรฐาน NIST\n\nทำไม MD5/SHA1 ถึงไม่ปลอดภัย:\n• เร็วเกินไป GPU สามารถ Brute Force ได้นับพันล้านครั้งต่อวินาที\n• Rainbow Table Attack: มีตาราง Hash สำเร็จรูปของรหัสผ่านทั่วไป\n\nSalt: ข้อมูลสุ่มที่เพิ่มเข้าก่อน Hash เพื่อป้องกัน Rainbow Table"
+      },
+      {
+        "type": "source_simulator",
+        "question": "ค้นหาความลับที่ถูกซ่อนไว้โดยนักพัฒนา แล้วนำ Flag มาตอบ",
+        "answer": "FLAG_S0URC3_C0D3",
+        "hint": "Level 1: ข้อมูลลับมักจะหลงเหลืออยู่ใน HTML Comments\nLevel 2: ในเบราว์เซอร์จริง เราจะกด `View Page Source` (Ctrl+U)\nLevel 3: กดปุ่ม 'Inspect Source Code' ในเครื่องมือจำลอง แล้วมองหาคอมเมนต์ที่มีคำว่า FLAG ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "owasp-xss",
+    "title": "Cross-Site Scripting (XSS)",
+    "icon": "📝",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Cross-Site Scripting (XSS) คืออะไร?",
+        "text": "XSS คือช่องโหว่ที่ผู้โจมตีสามารถฝังโค้ด JavaScript อันตรายเข้าไปในหน้าเว็บ เพื่อให้เบราว์เซอร์ของผู้ใช้คนอื่นประมวลผลโค้ดนั้น สามารถใช้:\n• ขโมย Session Cookie → Login เป็นเหยื่อได้\n• Keylogging: บันทึกการพิมพ์รหัสผ่าน\n• Phishing: แสดงหน้า Login ปลอม\n• Redirect ไปยังเว็บอันตราย\n• Cryptojacking: ใช้ CPU เหยื่อขุด Cryptocurrency"
+      },
+      {
+        "type": "content",
+        "heading": "XSS มีกี่ประเภท?",
+        "text": "1. Stored XSS (Persistent):\n• สคริปต์ถูกบันทึกลงฐานข้อมูล (เช่น โพสต์ในเว็บบอร์ด, Comment)\n• แสดงผลแก่ทุกคนที่เปิดหน้าเว็บนั้น\n• อันตรายสูงสุด เพราะส่งผลกระทบเป็นวงกว้าง\n\n2. Reflected XSS (Non-Persistent):\n• สคริปต์สะท้อนกลับทันทีจาก URL/Form\n• ต้องหลอกให้เหยื่อคลิก Link ที่มี Payload\n• เช่น: https://site.com/search?q=<script>alert(1)</script>\n\n3. DOM-based XSS:\n• เกิดจาก JavaScript ฝั่ง Client ที่นำ URL Parameter ไปแทรกใน DOM โดยไม่ Sanitize\n• ไม่ผ่าน Server เลย\n\nการป้องกัน XSS:\n• Output Encoding: เปลี่ยน < > & \" ' เป็น HTML Entities\n• Content-Security-Policy (CSP) Header: จำกัดแหล่งที่มาของ Script\n• DOMPurify: Library Sanitize HTML Input\n• HttpOnly Cookie: ป้องกัน JS อ่าน Cookie"
+      },
+      {
+        "type": "xss_simulator",
+        "question": "ลองใช้ Script ด้านบนเพื่อกระตุ้นช่องโหว่ดู แล้วเอา Flag ที่ปรากฏหลังจากโดนแฮกมาตอบ",
+        "answer": "FLAG_XSS_P0PUP",
+        "hint": "Level 1: ใส่โค้ด JavaScript ที่ใช้แสดงหน้าต่างแจ้งเตือน\nLevel 2: แท็กมาตรฐานคือ `<script>` และคำสั่งคือ `alert('...')`\nLevel 3: ป้อน `<script>alert('hack')</script>` ลงในช่อง Search ของ Simulator ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "ghost-gateway",
+    "title": "Ghost Gateway: API Exploitation",
+    "icon": "👻",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "สถานการณ์: The Internal Leak",
+        "text": "เราพบว่า SecureCorp มี API Gateway ภายในที่หลุดออกมาสู่เครือข่ายภายนอก (10.0.12.50) โดยมีการรันบริการทับซ้อนกันอยู่หลายเวอร์ชัน โดยเฉพาะระบบ Secure Gateway v1.4 ที่มักจะรันอยู่ที่พอร์ต 8443 นอกจากนี้ระบบยังมีช่องโหว่ Path Traversal ที่สามารถอ่านไฟล์นอกไดเรกทอรีเว็บได้ หากเข้าถึงด้วยสิทธิ์ที่ถูกต้อง\n\nภารกิจของคุณคือการสำรวจหาพอร์ตที่ซ้อนเร้น และใช้เทคนิค JWT Algorithm 'none' เพื่อปลอมแปลงสิทธิ์เข้าถึงไฟล์ /etc/secret.conf"
+      },
+      {
+        "type": "content",
+        "heading": "JWT (JSON Web Token) คืออะไร?",
+        "text": "JWT คือมาตรฐานการส่งข้อมูลระหว่าง Client และ Server ในรูปแบบ JSON ที่มีการเซ็น Signature\n\nโครงสร้าง JWT มี 3 ส่วน คั่นด้วย . :\n• Header: บอกประเภท Token และ Algorithm ที่ใช้เซ็น\n  { 'alg': 'HS256', 'typ': 'JWT' }\n• Payload: ข้อมูลที่ต้องการส่ง (Claims)\n  { 'sub': 'user123', 'role': 'user', 'exp': 1234567890 }\n• Signature: เซ็นด้วย Secret Key เพื่อยืนยันความถูกต้อง\n\nแต่ละส่วน Encode ด้วย Base64URL ไม่ใช่ Encrypted!\nคนอ่าน Payload ได้ แต่แก้ไขไม่ได้ (ถ้า Signature ถูกต้อง)"
+      },
+      {
+        "type": "content",
+        "heading": "JWT Algorithm 'none' คืออะไร?",
+        "text": "JWT Algorithm 'none' คือช่องโหว่ที่เกิดจากการตั้งค่า JWT Library ผิด:\n\nปกติ: JWT ต้องมี Signature เซ็นด้วย Secret Key\nช่องโหว่: บาง Library ยอมรับ Algorithm 'none' ซึ่งหมายถึงไม่ต้องมี Signature\n\nขั้นตอนการโจมตี:\n1. ถอดรหัส JWT Token เดิมจาก Base64URL\n2. แก้ไข Header: เปลี่ยน 'alg' เป็น 'none'\n3. แก้ไข Payload: เปลี่ยน role เป็น 'admin'\n4. เข้ารหัส Base64URL ใหม่ โดยไม่ใส่ Signature\n5. ส่ง Token ที่แก้ไขแล้ว ระบบที่มีช่องโหว่จะยอมรับ\n\nการป้องกัน:\n• ไม่ยอมรับ Algorithm 'none'\n• ใช้ Algorithm Allowlist ที่ระบุ Algorithm ที่รองรับ\n• ตรวจสอบ alg จาก Header เสมอ"
+      },
+      {
+        "type": "content",
+        "heading": "Path Traversal: การอ่านไฟล์นอก Web Root",
+        "text": "Path Traversal คือการใช้ ../ เพื่อขึ้นไปยัง Directory ที่สูงกว่า Web Root\n\nตัวอย่าง URL ที่มีช่องโหว่:\n• /download?file=report.pdf\n• โจมตี: /download?file=../../../../etc/passwd\n\nการ Encode เพื่อ Bypass Filter:\n• ../ → %2e%2e%2f (URL Encode)\n• ../ → ....// (Double Slash)\n• ../ → ..%252f (Double Encode)\n\nไฟล์เป้าหมายบ่อยๆ:\n• /etc/passwd: รายชื่อ User\n• /etc/shadow: Password Hash (ถ้า Web Server รัน root)\n• /proc/self/environ: Environment Variables\n• config.php: ข้อมูล Database Connection\n\nการป้องกัน:\n• ใช้ Allowlist ของไฟล์ที่อนุญาต\n• ตรวจสอบว่า Path ที่ได้อยู่ใน Web Root\n• ไม่ใช้ User Input ตรงๆ เป็น File Path"
+      },
+      {
+        "type": "ghost_simulator",
+        "question": "ค้นหาและถอดรหัสเพื่อนำ Flag จากไฟล์ secret.conf มาตอบ",
+        "answer": "FLAG_GHOST_JWT_TRAVERSAL",
+        "hint": "Level 1: วิเคราะห์ Log เพื่อหา Port/Endpoint ลับที่ระบบแจ้งเตือน มองหาสิ่งที่ดูเหมือน MOCK_MODE หรือพอร์ตแปลกๆ\nLevel 2: ลองใช้พอร์ต 8443 ร่วมกับ Endpoint `/api/v2/admin` และเปลี่ยน JWT Alg ให้เป็น 'none' เพื่อข้ามการตรวจสอบ\nLevel 3: ส่ง Request ไปที่พอร์ต 8443 บน Endpoint `/api/v2/admin` และระบุ File Path เป็น `/etc/secret.conf` (หรือใช้ ../../etc/secret.conf เพื่อทำ Path Traversal) พร้อมกับ JWT Token ที่มี alg เป็น none ค่ะ"
+      }
+    ]
+  }
+]

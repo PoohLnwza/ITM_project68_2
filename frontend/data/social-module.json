@@ -1,0 +1,87 @@
+[
+  {
+    "id": "social",
+    "title": "Social Engineering",
+    "icon": "👥",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "ศิลปะแห่งการแฮกมนุษย์",
+        "text": "Social Engineering (วิศวกรรมสังคม) คือการหลอกลวงที่เน้นการใช้จุดอ่อนทางจิตวิทยาของมนุษย์ เช่น ความเห็นใจ ความกลัว หรือความโลภ เพื่อให้เหยื่อทำบางอย่างที่เป็นอันตรายต่อความมั่นคงปลอดภัย\n\nทำไม Social Engineering ถึงอันตราย?\n• มนุษย์เป็นจุดอ่อนที่สุดในระบบรักษาความปลอดภัย\n• ไม่ต้องใช้ทักษะ Hacking เทคนิค\n• Firewall ล้ำแค่ไหนก็ป้องกันไม่ได้ถ้าพนักงานถูกหลอก\n• Kevin Mitnick แฮกเกอร์ชื่อดังใช้ Social Engineering เป็นหลัก"
+      },
+      {
+        "type": "content",
+        "heading": "Cialdini's 6 Principles of Influence",
+        "text": "Robert Cialdini นักจิตวิทยาระบุ 6 หลักการที่ผู้โจมตีมักใช้:\n\n1. Authority (อำนาจ):\n• ปลอมตัวเป็นหัวหน้า, ตำรวจ, IT Support\n• 'ผมเป็น IT จากส่วนกลาง ขอรหัสผ่านคุณเพื่ออัพเดทระบบ'\n\n2. Social Proof (หลักฐานทางสังคม):\n• 'พนักงานทุกคนในแผนกนี้ก็ทำแบบนี้แล้ว'\n\n3. Liking (ความชอบ):\n• สร้างความสนิทชิดเชื้อก่อน แล้วค่อยขอข้อมูล\n\n4. Reciprocity (การตอบแทน):\n• ทำของขวัญให้ก่อน แล้วขอข้อมูลกลับ\n\n5. Commitment & Consistency (ความสม่ำเสมอ):\n• หลอกให้ตกลงเรื่องเล็กน้อยก่อน แล้วขอสิ่งที่ใหญ่กว่า\n\n6. Scarcity/Urgency (ความเร่งด่วน):\n• 'ต้องทำภายใน 30 นาที ไม่งั้นบัญชีถูกล็อก'\n• ทำให้เหยื่อไม่มีเวลาคิดไตร่ตรอง"
+      },
+      {
+        "type": "content",
+        "heading": "ปัจจัยทางจิตวิทยาที่ถูกนำมาใช้",
+        "text": "ความรู้สึกพื้นฐานที่ผู้โจมตีใช้:\n\n• ความกลัว (Fear): 'บัญชีของคุณถูกแฮก ต้องยืนยันทันที'\n• ความโลภ (Greed): 'คุณได้รับรางวัล 500,000 บาท คลิกเพื่อรับ'\n• ความอยากรู้ (Curiosity): 'คุณจะไม่เชื่อสิ่งที่เพื่อนคุณพูดถึงคุณ'\n• ความสงสาร (Sympathy): 'ผมติดอยู่ต่างประเทศ ช่วยโอนเงินให้หน่อยได้ไหม'\n• ความไว้วางใจ (Trust): ปลอมเป็นคนที่เหยื่อรู้จัก\n• ความเร่งด่วน (Urgency): กดดันให้ตัดสินใจเร็ว ไม่มีเวลาคิด"
+      },
+      {
+        "type": "quiz",
+        "question": "ความรู้สึกใด ที่ผู้โจมตีมักใช้หลอกลวง เช่น 'คลิกเพื่อรับเงินรางวัลทันที' ?",
+        "answer": "ความโลภ",
+        "hint": "Level 1: เป็นความรู้สึกพื้นฐานของมนุษย์เมื่อเห็นผลประโยชน์\nLevel 2: ขึ้นต้นด้วยคำว่า 'ความ...' และเกี่ยวกับกิเลส\nLevel 3: คำตอบคือ 'ความโลภ' ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "social-techniques",
+    "title": "เทคนิคที่พบบ่อย",
+    "icon": "🎭",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "เจาะลึกเทคนิคยอดนิยม",
+        "text": "เทคนิค Social Engineering ที่พบในชีวิตจริง:\n\n• Baiting (วางกับดัก):\n  - วาง Flash Drive ไว้หน้าบริษัทหรือในที่จอดรถ\n  - คนเก็บไปเสียบ → Malware รัน\n  - รูปแบบ Online: แอบอ้างว่ามีเนื้อหาที่น่าสนใจในไฟล์ Free Download\n\n• Pretexting (สร้างเรื่องขึ้นมาหลอก):\n  - ปลอมตัว สร้าง Scenario ที่น่าเชื่อถือ\n  - เช่น โทรหาธนาคาร ปลอมเป็น Account Holder ขอรีเซ็ต PIN\n\n• Tailgating / Piggybacking (เดินตาม):\n  - เดินตามพนักงานเข้าประตูรักษาความปลอดภัย\n  - อ้างว่ามือถือหนักกำลังถือของ ขอให้ช่วยกดประตูให้\n\n• Quid Pro Quo (แลกกัน):\n  - โทรหาพนักงานอ้างว่าเป็น IT Support\n  - 'ผมจะช่วยแก้ปัญหาคอมให้ แต่ต้องการ Login ของคุณก่อน'\n\n• Watering Hole (แอบซ่อนในเว็บที่เหยื่อมักไป):\n  - ศึกษาว่าเหยื่อมักไปเว็บไหน\n  - ฝัง Malware ไว้ในเว็บนั้น"
+      },
+      {
+        "type": "content",
+        "heading": "Vishing: การโจมตีผ่านเสียง",
+        "text": "Vishing (Voice Phishing) คือการใช้โทรศัพท์หลอกลวง\n\nรูปแบบที่พบบ่อยในไทย:\n• แก๊งคอลเซ็นเตอร์: ปลอมเป็น DSI, กรมสรรพากร, ธนาคาร\n• อ้างว่า 'มีพัสดุตกค้าง ต้องโอนค่าภาษี'\n• 'บัญชีท่านถูกใช้ฟอกเงิน ต้องโอนเงินมาพิสูจน์'\n\nเทคนิคที่ใช้:\n• Caller ID Spoofing: ปลอมเลขโทรศัพท์ให้เหมือนธนาคารหรือหน่วยงานรัฐ\n• Script ที่ Polished: เตรียมคำตอบไว้สำหรับทุกข้อสงสัย\n• ใช้ AI Voice: สังเคราะห์เสียงของคนที่เหยื่อรู้จัก\n\nการป้องกัน:\n• วางสายแล้วโทรกลับเบอร์จริงขององค์กร\n• ธนาคารจะไม่ขอ OTP หรือรหัสผ่านทางโทรศัพท์"
+      },
+      {
+        "type": "quiz",
+        "question": "การแกล้งทำ Flash Drive หล่นไว้หน้าบริษัทเพื่อให้พนักงานเก็บไปใช้ เรียกว่าเทคนิคใด?",
+        "answer": "baiting",
+        "hint": "Level 1: ภาษาอังกฤษย่อมาจากคำว่า 'การวางเหยื่อล่อ'\nLevel 2: สะกดด้วยตัว B\nLevel 3: คำตอบคือ baiting ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "การเดินตามคนอื่นเข้าประตูล็อกโดยไม่ใช้บัตรของตัวเอง เรียกว่าอะไร?",
+        "answer": "tailgating",
+        "hint": "Level 1: คำศัพท์ที่แปลว่าการขับรถจี้ตูด หรือเดินตามหลังชิดๆ\nLevel 2: ขึ้นต้นด้วย Tail...\nLevel 3: พิมพ์ว่า 'tailgating' ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "social-defense",
+    "title": "การป้องกันรับมือ",
+    "icon": "🛡️",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "วิธีป้องกันระดับบุคคล",
+        "text": "หัวใจสำคัญคือ 'ความไม่ไว้ใจอย่างสร้างสรรค์' (Healthy Skepticism)\n\n• ตรวจสอบตัวตนผู้ติดต่อก่อนให้ข้อมูลใดๆ\n• ไม่ใช้ Flash Drive ที่ไม่รู้ที่มา\n• ตรวจสอบ URL เสมอก่อนพิมพ์รหัสผ่าน\n• อย่า Click Link ใน Email โดยตรง พิมพ์ URL เองในเบราว์เซอร์\n• ถ้ามีความสงสัย วางสายและโทรกลับเบอร์จริง\n• ไม่แชร์ข้อมูลส่วนตัวบน Social Media มากเกินไป\n• ตั้ง Privacy Settings บน Facebook/Line ให้เป็น Private\n• ใช้ Password Manager ไม่ใช้รหัสผ่านซ้ำ\n• เปิดใช้ MFA ทุกบัญชีสำคัญ"
+      },
+      {
+        "type": "content",
+        "heading": "Security Awareness Training ในองค์กร",
+        "text": "การสร้าง Security Culture ในองค์กร:\n\n1. Training ประจำปี:\n• เนื้อหา Social Engineering, Phishing, Password Policy\n• Scenario-based Learning (เรียนผ่านสถานการณ์จริง)\n\n2. Phishing Simulation:\n• ส่ง Phishing Email ปลอมให้พนักงาน\n• ใครคลิก → ได้รับ Training ทันที\n• วัดผล Click Rate และติดตามพัฒนาการ\n\n3. Incident Reporting Culture:\n• ส่งเสริมให้พนักงานรายงานเมื่อพบสิ่งน่าสงสัย\n• ไม่ตำหนิผู้รายงาน สร้าง Blame-free Culture\n\n4. Policies & Procedures:\n• Clean Desk Policy: ไม่ทิ้งเอกสารลับไว้บนโต๊ะ\n• Visitor Management: ควบคุมการเข้าออกของบุคคลภายนอก\n• Need-to-Know: แชร์ข้อมูลเฉพาะคนที่จำเป็น"
+      },
+      {
+        "type": "content",
+        "heading": "MFA และ Zero Trust",
+        "text": "Multi-Factor Authentication (MFA):\n• ยืนยันตัวตนด้วยหลายปัจจัยพร้อมกัน\n• Something you know: รหัสผ่าน\n• Something you have: OTP, Security Key, Authenticator App\n• Something you are: Biometrics (ลายนิ้วมือ, ใบหน้า)\n\nทำไม MFA สำคัญมาก:\n• แม้รหัสผ่านถูกขโมยจาก Phishing ผู้โจมตียังต้องการ Factor ที่ 2\n• ลด Risk จาก Credential Stuffing\n\nแนะนำ Authenticator Apps:\n• Google Authenticator\n• Microsoft Authenticator\n• Authy\n\nZero Trust Architecture:\n• 'Never Trust, Always Verify' -- ไม่เชื่อใคร แม้อยู่ใน Internal Network\n• ตรวจสอบทุก Access Request\n• Least Privilege Access\n• ป้องกัน Lateral Movement ได้ดี"
+      },
+      {
+        "type": "quiz",
+        "question": "เทคโนโลยีใดที่ช่วยป้องกันบัญชีผู้ใช้ได้ แม้รหัสผ่านจะถูกหลอกให้บอกไปแล้ว?",
+        "answer": "mfa",
+        "hint": "Level 1: ย่อมาจาก Multi-Factor Authentication\nLevel 2: เป็นระดับการยืนยันตัวตน 2 ชั้น (หรือมากกว่า)\nLevel 3: ตอบ 'mfa' ค่ะ"
+      }
+    ]
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "phishing",
+    "title": "Phishing Fundamentals",
+    "icon": "🎣",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "Phishing คืออะไร?",
+        "text": "Phishing (การตกปลา) คือเทคนิคหลอกลวงที่เน้นการใช้จิตวิทยา (Social Engineering) ผ่านอีเมลหรือข้อความ เพื่อสร้างความเชื่อใจหรือความเร่งด่วน โดยมีเป้าหมายหลักคือการขโมยข้อมูลส่วนตัว รหัสผ่าน หรือหลอกให้ติดตั้งมัลแวร์\n\nสถิติ:\n• 90% ของ Data Breach เริ่มต้นจาก Phishing Email\n• ค่าความเสียหายเฉลี่ย $4.9 ล้านต่อองค์กร\n• 30% ของ Phishing Email ถูกเปิดโดยเหยื่อ"
+      },
+      {
+        "type": "content",
+        "heading": "วิธีการทำงานของ Phishing Email",
+        "text": "กระบวนการ Phishing ทั่วไป:\n\n1. Reconnaissance: ผู้โจมตีเก็บข้อมูลเหยื่อ (ชื่อ, อีเมล, บริษัท)\n2. Crafting: สร้างอีเมลปลอมที่น่าเชื่อถือ ปลอม Brand ที่เหยื่อรู้จัก\n3. Sending: ส่งจาก Domain ที่สะกดใกล้เคียง เช่น amaz0n.com\n4. Landing Page: เหยื่อคลิก Link → ไปหน้าเว็บปลอม\n5. Harvest: เหยื่อกรอกข้อมูล → ข้อมูลถูกส่งไปที่ผู้โจมตี\n\nเป้าหมายที่ถูก Phish บ่อย:\n• ธนาคาร (ปลอมเป็น SCB, KBank, BBL)\n• Social Media (Facebook, LINE)\n• E-commerce (Lazada, Shopee)\n• Parcel (ไปรษณีย์, DHL, Kerry)\n• IT/Security (Microsoft, Google, Office 365)"
+      },
+      {
+        "type": "content",
+        "heading": "สัญญาณเตือนภัย (Red Flags)",
+        "text": "1. Sender Domain ผิดปกติ:\n• ชื่อผู้ส่งอาจดูใช่ แต่ Domain สะกดผิด\n• เช่น @gmai1.com, @microsoft-support.com, @paypa1.com\n• Domain Lookalike: аmazon.com (ใช้ Cyrillic a แทน Latin a)\n\n2. Urgency (ความเร่งด่วน):\n• 'บัญชีจะถูกระงับใน 24 ชั่วโมง'\n• 'ยืนยันทันที หรือสิทธิ์จะหมด'\n\n3. Link ไม่ตรงกับปลายทางจริง:\n• ปุ่ม 'Click Here' แต่ URL จริงเป็น http://bit.ly/xxxxx\n• Hover บน Link ก่อนคลิกเพื่อดู URL จริง\n\n4. ขอข้อมูลละเอียดอ่อน:\n• ธนาคารแท้จะไม่ขอรหัสผ่านทางอีเมล\n• 'กรุณากรอก OTP เพื่อยืนยัน'\n\n5. ไฟล์แนบน่าสงสัย:\n• .exe, .docm, .xlsm (มี Macro)\n• .zip ที่มีรหัสผ่าน (ป้องกัน Antivirus scan)"
+      },
+      {
+        "type": "content",
+        "heading": "Email Authentication: SPF, DKIM, DMARC",
+        "text": "มาตรฐานป้องกัน Email Spoofing:\n\nSPF (Sender Policy Framework):\n• DNS TXT Record ระบุว่า Server ไหนส่งอีเมลแทน Domain ได้บ้าง\n• ป้องกันคนอื่นส่งอีเมลในนาม @yourcompany.com\n\nDKIM (DomainKeys Identified Mail):\n• เซ็น Signature ดิจิทัลในอีเมล ยืนยันว่าไม่ถูกแก้ไขระหว่างทาง\n• ใช้ Public/Private Key Cryptography\n\nDMARC (Domain-based Message Authentication):\n• กำหนด Policy ว่าทำอย่างไรถ้า SPF/DKIM ล้มเหลว\n• none: แค่รายงาน, quarantine: ส่ง Spam, reject: ปฏิเสธ\n\nตรวจสอบ Email Header:\n• ดู Received-from header: เส้นทางอีเมล\n• Authentication-Results: ผล SPF/DKIM/DMARC\n• Reply-To: ต่างจาก From ไหม?"
+      },
+      {
+        "type": "inbox_simulator",
+        "flag": "FLAG_PH1SH_D3T3CT0R"
+      }
+    ]
+  },
+  {
+    "id": "phishing-types",
+    "title": "ประเภทของ Phishing",
+    "icon": "🎭",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "รูปแบบการโจมตีที่หลากหลาย",
+        "text": "Phishing มีหลายรูปแบบตามช่องทางและเป้าหมาย:\n\n1. Email Phishing: หลอกผ่านอีเมล (แบบที่พบบ่อยสุด)\n2. Spear Phishing: เจาะจงรายคนหรือรายองค์กร ใช้ข้อมูลส่วนตัวของเหยื่อ\n3. Whaling: เจาะจงผู้บริหารระดับสูง CEO, CFO (ปลาวาฬ)\n4. Clone Phishing: ปลอมอีเมลจริงที่เหยื่อเคยได้รับ แทนที่ Link ด้วย Malicious Link\n5. Vishing: หลอกผ่านโทรศัพท์ (Voice + Phishing)\n6. Smishing: หลอกผ่าน SMS\n7. Business Email Compromise (BEC): ปลอมเป็น CEO หรือ Partner ขอโอนเงิน\n8. Angler Phishing: ปลอมเป็น Customer Support บน Social Media"
+      },
+      {
+        "type": "content",
+        "heading": "Spear Phishing vs Whaling",
+        "text": "Spear Phishing:\n• ไม่ใช่การส่ง Spam แบบหว่าน\n• ผู้โจมตีศึกษาเหยื่อล่วงหน้า (LinkedIn, Social Media)\n• อีเมลมีชื่อเหยื่อ ชื่อเพื่อนร่วมงาน หรือโครงการที่กำลังทำ\n• ตรวจจับยากกว่า Phishing ทั่วไปมาก\n\nตัวอย่าง Spear Phishing:\n'สวัสดีคุณสมชาย อีเมลนี้เกี่ยวกับรายงาน Q4 ที่คุณนำเสนอเมื่อวาน ช่วยดูไฟล์แนบนะครับ'\n\nWhaling:\n• เป้าหมายคือ C-Level Executives\n• มูลค่าความเสียหายสูงมาก เพราะมีอำนาจสั่งโอนเงิน\n• BEC (Business Email Compromise) มักใช้ Whaling\n• ตัวอย่าง: Email ปลอมเป็น CEO สั่ง CFO โอนเงิน 10 ล้านบาทเร่งด่วน\n\nป้องกัน BEC:\n• Verification Call สำหรับคำขอโอนเงิน\n• Multi-person Authorization\n• Training ให้รู้จัก BEC"
+      },
+      {
+        "type": "quiz",
+        "question": "การหลอกลวงผ่านทางโทรศัพท์เครือข่ายมือถือ (เช่น แก๊งคอลเซ็นเตอร์) เรียกว่าอะไร?",
+        "answer": "vishing",
+        "hint": "Level 1: มาจากคำว่า Voice รวมกับ Phishing\nLevel 2: ขึ้นต้นด้วยตัว V\nLevel 3: คำตอบคือ vishing ค่ะ"
+      },
+      {
+        "type": "quiz",
+        "question": "การโจมตีที่พุ่งเป้าไปที่ผู้บริหารระดับสูงขององค์กร เรียกว่าเทคนิคใด?",
+        "answer": "whaling",
+        "hint": "Level 1: เปรียบเทียบผู้บริหารเป็นสัตว์ทะเลขนาดใหญ่มาก\nLevel 2: เรียกว่าการล่าปลาวาฬ\nLevel 3: คำตอบคือ whaling ค่ะ"
+      }
+    ]
+  },
+  {
+    "id": "phishing-analysis",
+    "title": "การตรวจสอบเชิงลึก",
+    "icon": "🔍",
+    "sections": [
+      {
+        "type": "content",
+        "heading": "เครื่องมือช่วยวิเคราะห์ Phishing",
+        "text": "• VirusTotal (virustotal.com): สแกน URL, File, Hash ด้วย Antivirus 70+ ตัว ฟรี\n• URLScan.io: เปิด URL ในกล่องทรายเพื่อดูว่าเว็บนั้นทำอะไร\n• Any.run: Sandbox สำหรับรันไฟล์ที่สงสัย ดูพฤติกรรม Real-time\n• Hybrid Analysis: อีก Sandbox ที่ฟรีและทรงพลัง\n• MXToolbox: ตรวจสอบ Email Header, SPF, DKIM, DMARC\n• PhishTank: ฐานข้อมูล Phishing URLs\n• Google Safe Browsing: เช็ค URL ว่าอยู่ใน Blocklist\n• Whois Lookup: ดูว่าเว็บนั้นจดทะเบียนเมื่อไหร่ (เว็บปลอมมักจดใหม่)"
+      },
+      {
+        "type": "content",
+        "heading": "การวิเคราะห์ URL อย่างระมัดระวัง",
+        "text": "วิธีตรวจสอบ URL ก่อนคลิก:\n\n1. ดูที่ Scheme: http:// ไม่มีการเข้ารหัส, https:// มีการเข้ารหัส (แต่ไม่ได้หมายความว่าปลอดภัยเสมอ!)\n\n2. Domain ที่แท้จริง:\n• https://login.microsoft.com.evil.com/... → Domain จริงคือ evil.com ไม่ใช่ microsoft.com!\n• อ่านจากขวาสุดไปซ้ายที่ / ตัวแรก\n\n3. Subdomain ปลอม:\n• http://microsoft.com.login.phisher.com → Domain จริงคือ phisher.com\n\n4. Homograph Attack:\n• ใช้อักขระจากภาษาอื่นที่หน้าตาเหมือนกัน เช่น аpple.com (а Cyrillic)\n\n5. URL Shortener:\n• bit.ly, tinyurl ซ่อน URL จริง\n• ใช้ unshorten.it เพื่อดู URL จริง\n\n6. IDN (Internationalized Domain Name):\n• xn--pple-43d.com อาจแสดงเป็น аpple.com"
+      },
+      {
+        "type": "content",
+        "heading": "การรายงานและรับมือ Phishing",
+        "text": "เมื่อพบ Phishing ควรทำอย่างไร:\n\nสำหรับบุคคลทั่วไป:\n• อย่าคลิก Link หรือเปิดไฟล์แนบ\n• รายงานไปที่ ETDA (สำนักงานพัฒนาธุรกรรมทางอิเล็กทรอนิกส์)\n• แจ้ง Google, Microsoft ผ่าน Report Phishing\n• แจ้งธนาคารทันทีถ้าอาจถูกขโมยข้อมูล\n\nสำหรับองค์กร:\n• มี Phishing Response Procedure\n• Block Domain/IP ที่ Firewall/Email Gateway\n• Notify พนักงานทั้งองค์กร\n• Report ไปยัง Threat Intel Platform\n• Forensics: วิเคราะห์ว่ามีใครคลิกแล้วบ้าง\n\nการฝึกอบรม:\n• Phishing Simulation: ส่ง Phishing ปลอมเพื่อทดสอบพนักงาน\n• Security Awareness Training ประจำปี"
+      },
+      {
+        "type": "quiz",
+        "question": "เว็บไซต์ใดที่เราสามารถนำ URL ไปวางเพื่อตรวจสอบว่ามีมัลแวร์หรือเป็นเว็บฟิชชิ่งหรือไม่?",
+        "answer": "virustotal",
+        "hint": "Level 1: ชื่อเว็บประกอบด้วยคำว่า Virus และคำว่า Total\nLevel 2: เป็นบริการยอดนิยมของ Google สำหรับสแกนมัลแวร์\nLevel 3: พิมพ์ว่า 'virustotal' ค่ะ"
+      }
+    ]
+  }
+]

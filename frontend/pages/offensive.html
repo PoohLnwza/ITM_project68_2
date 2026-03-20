@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offensive Security — Cyberpark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/modules.css" />
+  <link rel="stylesheet" href="../components/chatbot/chatbot.css" />
+  <link rel="stylesheet" href="../components/terminal/terminal.css" />
+  <style>
+    .diagram-container {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .diagram-container img {
+      max-width: 50%;
+      height: auto;
+      border-radius: 6px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .diagram-caption {
+      font-family: var(--font-primary);
+font-size: var(--text-xs);
+      color: var(--text-dim);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .ascii-diagram {
+      background: var(--surface-2);
+      border: 1px solid rgba(59, 130, 246, .12);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 8px;
+    }
+
+    .ascii-diagram pre {
+      font-family: 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      line-height: var(--leading-normal);
+      color: var(--orange);
+      text-align: center;
+      margin: 0;
+    }
+
+    /* Offensive-specific styles */
+    .vuln-demo {
+      border-radius: 10px;
+      border: 1px solid rgba(249, 115, 22, .3);
+      background: var(--surface-2);
+      padding: 16px 20px;
+      margin: 12px 0;
+      backdrop-filter: blur(6px);
+    }
+
+    .vuln-demo input,
+    .vuln-demo select {
+      font-family: var(--font-primary);
+font-size: var(--text-sm);
+      padding: 8px 12px;
+      margin-top: 5px;
+      background: var(--surface-2);
+      color: #fff;
+      border: 1px solid rgba(249, 115, 22, .3);
+      border-radius: 6px;
+    }
+
+    .vuln-demo button {
+      font-family: var(--font-primary);
+font-size: var(--text-xs);
+      padding: 8px 16px;
+      margin-top: 5px;
+      background: transparent;
+      color: var(--orange);
+      border: 1px solid var(--orange);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: background .2s, color .2s;
+    }
+
+    .vuln-demo button:hover {
+      background: var(--orange);
+      color: #fff;
+    }
+
+    .vuln-result {
+      margin-top: 10px;
+      padding: 10px;
+      background: var(--surface-2);
+      border: 1px dashed rgba(249, 115, 22, .2);
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: var(--text-xs);
+      min-height: 40px;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+  </style>
+  <link rel="icon" type="image/png" href="../assets/images/bot-avatar.png" />
+</head>
+
+<body>
+  <div class="app-wrapper">
+    <div class="app-container">
+      <div class="module-page-wrapper">
+        <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        <aside class="module-sidebar" id="moduleSidebar">
+          <div class="sidebar-header">
+            <a href="technical.html"><button class="back-btn">&#x3C; RETURN BASE</button></a>
+            <h2 style="color:var(--orange)">OFFENSIVE SEC.</h2>
+          </div>
+          <ul class="module-list" id="sidebarList"></ul>
+        </aside>
+        <main class="module-content">
+          <div class="content-header">
+            <p class="content-breadcrumb">
+              <a href="../index.html">Cyberpark</a> ▸
+              <a href="technical.html">Technical Path</a> ▸ Offensive Security
+            </p>
+            <h1 id="contentTitle" style="color:var(--orange)">Loading...</h1>
+            <button class="terminal-page-btn" id="terminalPageBtn">$ TERMINAL</button>
+          </div>
+          <div id="contentArea"></div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script src="../js/modules/offensive.js"></script>
+  <script src="../components/chatbot/chatbot.js"></script>
+  <script>window.AUTH_MODE = 'guard';</script>
+  <script src="../js/auth.js"></script>
+  <script src="../components/terminal/terminal.js"></script>
+  <script>
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      document.getElementById('moduleSidebar').classList.toggle('open');
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # 1. Python Backend (FastAPI + RAG) — DB is on Neon cloud
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: secure_sensei_api
+    ports:
+      - '8000:8000'
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+    volumes:
+      - ./frontend/data:/app/data
+      - ./backend:/app
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  web:
+    image: nginx:alpine
+    container_name: secure_sensei_web
+    ports:
+      - '8080:80'
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - api
